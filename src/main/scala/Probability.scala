@@ -13,6 +13,8 @@ class LogProbability(v: Double) {
     
   def -(p: LogProbability):LogProbability =
     new LogProbability(logValue - math.log(1 - math.exp(logValue - p.logValue)))
+    
+  override def toString:String = expValue.toString
 }
 
 object Probability {
