@@ -36,19 +36,22 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
     (Probability(0.5) * Probability(0.5)).logValue should be (Probability(0.25).logValue plusOrMinus 0.0001)
     (Probability(1.0) * Probability(0.2)).logValue should be (Probability(0.20).logValue plusOrMinus 0.0001)
     (Probability(0.5) * Probability(1.0)).logValue should be (Probability(0.50).logValue plusOrMinus 0.0001)
-    (Probability(0.5) * Probability(0.6)).logValue should be (Probability(0.30).logValue plusOrMinus 0.0001)
-    (Probability(0.6) * Probability(0.6)).logValue should be (Probability(0.36).logValue plusOrMinus 0.0001)
-    (Probability(0.7) * Probability(0.7)).logValue should be (Probability(0.49).logValue plusOrMinus 0.0001)
-    (Probability(0.5) * Probability(0.9)).logValue should be (Probability(0.45).logValue plusOrMinus 0.0001)
-    (Probability(1.0) * Probability(1.0)).logValue should be (Probability(1.00).logValue plusOrMinus 0.0001)
   }
   
   it should "divide probabilities" in {
-    (Probability(0.5) / Probability(0.5)).logValue should be (Probability(1).logValue plusOrMinus 0.0001)
+    (Probability(0.5) / Probability(0.5)).logValue should be (Probability(1.0).logValue plusOrMinus 0.0001)
+    (Probability(0.1) / Probability(0.5)).logValue should be (Probability(0.2).logValue plusOrMinus 0.0001)
+    (Probability(0.5) / Probability(0.1)).logValue should be (Probability(5.0).logValue plusOrMinus 0.0001)
+    (Probability(0.1) / Probability(0.1)).logValue should be (Probability(1.0).logValue plusOrMinus 0.0001)
+    (Probability(0.2) / Probability(0.3)).logValue should be (Probability(0.666666).logValue plusOrMinus 0.0001)
   }
   
   it should "add probabilities" in {
     (Probability(0.5) + Probability(0.2)).logValue should be (Probability(0.7).logValue plusOrMinus 0.0001)
+    (Probability(0.5) + Probability(0.5)).logValue should be (Probability(1.0).logValue plusOrMinus 0.0001)
+    (Probability(0.9) + Probability(0.3)).logValue should be (Probability(1.2).logValue plusOrMinus 0.0001)
+    (Probability(0.9) + Probability(0.0)).logValue should be (Probability(0.9).logValue plusOrMinus 0.0001)
+    (Probability(0.1) + Probability(0.1)).logValue should be (Probability(0.2).logValue plusOrMinus 0.0001)
   }
   
   it should "subtract probabilities" in {
