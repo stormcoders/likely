@@ -1,3 +1,4 @@
-class Probability(value: Double) {
-  val logValue = math.log(value)
+class Probability(v: Double) {
+  val logValue = math.log(v)
+  def value = math.exp(logValue)
 }
