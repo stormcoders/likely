@@ -24,5 +24,7 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
     (Probability(0.5) + Probability(0.2)).logValue should be (Probability(0.7).logValue plusOrMinus 0.0001)
   }
   
-  it should "subtract probabilities" in (pending)
+  it should "subtract probabilities" in {
+    (Probability(0.5) - Probability(0.2)).logValue should be (Probability(0.3).logValue plusOrMinus 0.0001)
+  }
 }

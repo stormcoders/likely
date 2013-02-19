@@ -10,6 +10,9 @@ class LogProbability(v: Double) {
     
   def +(p: LogProbability):LogProbability =
     new LogProbability(logValue - math.log(1 + math.exp(logValue - p.logValue)))
+    
+  def -(p: LogProbability):LogProbability =
+    new LogProbability(logValue - math.log(1 - math.exp(logValue - p.logValue)))
 }
 
 object Probability {
