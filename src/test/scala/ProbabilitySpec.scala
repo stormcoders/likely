@@ -32,6 +32,15 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   
   it should "multiply probabilities" in {
     (Probability(0.5) * Probability(0.2)).logValue should be (Probability(0.10).logValue plusOrMinus 0.0001)
+    (Probability(0.2) * Probability(0.2)).logValue should be (Probability(0.04).logValue plusOrMinus 0.0001)
+    (Probability(0.5) * Probability(0.5)).logValue should be (Probability(0.25).logValue plusOrMinus 0.0001)
+    (Probability(1.0) * Probability(0.2)).logValue should be (Probability(0.20).logValue plusOrMinus 0.0001)
+    (Probability(0.5) * Probability(1.0)).logValue should be (Probability(0.50).logValue plusOrMinus 0.0001)
+    (Probability(0.5) * Probability(0.6)).logValue should be (Probability(0.30).logValue plusOrMinus 0.0001)
+    (Probability(0.6) * Probability(0.6)).logValue should be (Probability(0.36).logValue plusOrMinus 0.0001)
+    (Probability(0.7) * Probability(0.7)).logValue should be (Probability(0.49).logValue plusOrMinus 0.0001)
+    (Probability(0.5) * Probability(0.9)).logValue should be (Probability(0.45).logValue plusOrMinus 0.0001)
+    (Probability(1.0) * Probability(1.0)).logValue should be (Probability(1.00).logValue plusOrMinus 0.0001)
   }
   
   it should "divide probabilities" in {
