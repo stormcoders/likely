@@ -5,7 +5,7 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   behavior of "A probability"
   
   it should "store its log representation" in {
-    Prob(0.5).logValue should be (math.log(0.5) plusOrMinus 0.0001)
+    Prob(0.5).logValue should be (-math.log(0.5) plusOrMinus 0.0001)
   }
   
   it should "show its normal [0,1] representation" in {
@@ -13,11 +13,11 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   }
   
   it should "multiply probabilities" in {
-    (Prob(0.5) * Prob(0.2)).logValue should be (math.log(0.10) plusOrMinus 0.0001)
+    (Prob(0.5) * Prob(0.2)).logValue should be (-math.log(0.10) plusOrMinus 0.0001)
   }
   
   it should "divide probabilities" in {
-    (Prob(0.5) / Prob(0.5)).logValue should be (math.log(1) plusOrMinus 0.0001)
+    (Prob(0.5) / Prob(0.5)).logValue should be (-math.log(1) plusOrMinus 0.0001)
   }
   
   it should "add probabilities" in (pending)
