@@ -56,6 +56,10 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   
   it should "subtract probabilities" in {
     (Probability(0.5) - Probability(0.2)).logValue should be (Probability(0.3).logValue plusOrMinus 0.0001)
+    (Probability(0.5) - Probability(0.5)).logValue should be (Probability(0.0).logValue plusOrMinus 0.0001)
+    (Probability(0.9) - Probability(0.3)).logValue should be (Probability(0.6).logValue plusOrMinus 0.0001)
+    (Probability(0.9) - Probability(0.0)).logValue should be (Probability(0.9).logValue plusOrMinus 0.0001)
+    (Probability(0.1) - Probability(0.1)).logValue should be (Probability(0.0).logValue plusOrMinus 0.0001)
   }
   
   it should "have a string representation" in {
