@@ -1,18 +1,19 @@
 import org.scalatest._
+import org.scalatest.matchers._
 
-class ProbabilitySpec extends FlatSpec {
+class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   behavior of "A probability"
   
   it should "store its log representation" in {
-    assert(Prob(0.5).logValue === math.log(0.5))
+    Prob(0.5).logValue should be (math.log(0.5) plusOrMinus 0.0001)
   }
   
   it should "show its normal [0,1] representation" in {
-    assert(Prob(0.5).value === 0.5)
+    Prob(0.5).value should be (0.5 plusOrMinus 0.0001)
   }
   
   it should "multiply probabilities" in {
-    assert((Prob(0.5) * Prob(0.2)).logValue === math.log(0.10))
+    (Prob(0.5) * Prob(0.2)).logValue should be (math.log(0.10) plusOrMinus 0.0001)
   }
   
   it should "divide probabilities" in (pending)
