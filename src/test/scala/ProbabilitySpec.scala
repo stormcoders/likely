@@ -18,7 +18,16 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   }
   
   it should "show its normal [0,1] representation" in {
+    Probability(1.0).expValue should be (1.0 plusOrMinus 0.0001)
+    Probability(0.9).expValue should be (0.9 plusOrMinus 0.0001)
+    Probability(0.8).expValue should be (0.8 plusOrMinus 0.0001)
+    Probability(0.7).expValue should be (0.7 plusOrMinus 0.0001)
+    Probability(0.6).expValue should be (0.6 plusOrMinus 0.0001)
     Probability(0.5).expValue should be (0.5 plusOrMinus 0.0001)
+    Probability(0.4).expValue should be (0.4 plusOrMinus 0.0001)
+    Probability(0.3).expValue should be (0.3 plusOrMinus 0.0001)
+    Probability(0.2).expValue should be (0.2 plusOrMinus 0.0001)
+    Probability(0.1).expValue should be (0.1 plusOrMinus 0.0001)
   }
   
   it should "multiply probabilities" in {
