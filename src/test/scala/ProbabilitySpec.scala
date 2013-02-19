@@ -13,11 +13,11 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   }
   
   it should "multiply probabilities" in {
-    (Prob(0.5) * Prob(0.2)).logValue should be (-math.log(0.10) plusOrMinus 0.0001)
+    (Prob(0.5) * Prob(0.2)).logValue should be (Prob(0.10).logValue plusOrMinus 0.0001)
   }
   
   it should "divide probabilities" in {
-    (Prob(0.5) / Prob(0.5)).logValue should be (-math.log(1) plusOrMinus 0.0001)
+    (Prob(0.5) / Prob(0.5)).logValue should be (Prob(1).logValue plusOrMinus 0.0001)
   }
   
   it should "add probabilities" in (pending)
