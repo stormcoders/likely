@@ -4,6 +4,9 @@ class Probability(v: Double) {
   
   def *(p: Probability):Probability =
     new Probability(logValue + p.logValue)
+    
+  def /(p: Probability):Probability =
+    new Probability(logValue - p.logValue)
 }
 
 object Prob {
