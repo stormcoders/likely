@@ -1,14 +1,14 @@
-class Probability(v: Double) {
+class LogProbability(v: Double) {
   val logValue = v
   def value = math.exp(-logValue)
   
-  def *(p: Probability):Probability =
-    new Probability(logValue + p.logValue)
+  def *(p: LogProbability):LogProbability =
+    new LogProbability(logValue + p.logValue)
     
-  def /(p: Probability):Probability =
-    new Probability(logValue - p.logValue)
+  def /(p: LogProbability):LogProbability =
+    new LogProbability(logValue - p.logValue)
 }
 
 object Prob {
-  def apply(v: Double) = new Probability(-math.log(v))
+  def apply(v: Double) = new LogProbability(-math.log(v))
 }
