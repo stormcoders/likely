@@ -12,4 +12,7 @@ class Alphabet(symbols: List[String]) {
     
   def generateSequeceOfSymbols(ids: List[Int]): List[String] =
     ids.map(id => symbol(id))
+    
+  def generateSequeceOfIds(symbols: List[String]): List[Int] =
+    symbols.map(symbol => id(symbol))
 }
