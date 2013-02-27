@@ -20,7 +20,17 @@ class AlphabetSpec extends FlatSpec with ShouldMatchers {
     casino.id("Invalid") should be === -1
   }
   
-  it should "return id's symbol" in (pending)
+  it should "return id's symbol" in {
+    val casino = new Alphabet(List("Loaded", "Fair"))
+    casino.symbol(0) should be === "Loaded"
+    casino.symbol(1) should be === "Fair"
+  }
+  
+  it should "return an empty string if id is invalid" in {
+    val casino = new Alphabet(List("Loaded", "Fair"))
+    casino.symbol(2) should be === ""
+  }
+  
   it should "generate a sequence of ids" in (pending)
   it should "generate a sequence of symbols" in (pending)
 }
