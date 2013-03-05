@@ -16,4 +16,8 @@ class IIDModel(distribution: DiscreteDistribution) {
     }
     chooseWith((new Random()).nextDouble, distribution.probabilities, 0)
   }
+  
+  def chooseSequence(size: Int): List[Int] = 
+    if (size > 0) choose :: chooseSequence(size-1)
+    else List()
 }

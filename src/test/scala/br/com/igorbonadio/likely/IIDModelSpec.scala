@@ -22,4 +22,12 @@ class IIDModelSpec extends FlatSpec with ShouldMatchers {
     
     model.choose should (be === 0 or be === 1)
   }
+  
+  it should "generate a random sequence" in {
+    val alphabet = new Alphabet(List("Loaded", "Fair"))
+    val distribution = new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
+    val model = new IIDModel(distribution)
+    
+    model.chooseSequence(5).foreach(sym => sym should (be === 0 or be === 1))
+  }
 }
