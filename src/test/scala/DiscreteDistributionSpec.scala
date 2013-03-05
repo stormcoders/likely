@@ -6,8 +6,8 @@ class DiscreteDistributionSpec extends FlatSpec with ShouldMatchers {
   
   it should "get the probability of a given symbol" in {
     val alphabet = new Alphabet(List("Loaded", "Fair"))
-    val distribution = new DiscreteDistribution(List(0.8, 0.2))
-    distribution.prob(alphabet.id("Loaded")) should be === 0.8
-    distribution.prob(alphabet.id("Fair")) should be === 0.2
+    val distribution = new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
+    distribution.prob(alphabet.id("Loaded")).expValue should be (0.8 plusOrMinus 0.0001)
+    distribution.prob(alphabet.id("Fair")).expValue should be (0.2 plusOrMinus 0.0001)
   }
 }
