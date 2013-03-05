@@ -14,4 +14,12 @@ class IIDModelSpec extends FlatSpec with ShouldMatchers {
     
     model.prob(sequence).expValue should be (0.16 plusOrMinus 0.0001)
   }
+  
+  it should "generate a random symbol" in {
+    val alphabet = new Alphabet(List("Loaded", "Fair"))
+    val distribution = new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
+    val model = new IIDModel(distribution)
+    
+    model.choose should (be === 0 or be === 1)
+  }
 }
