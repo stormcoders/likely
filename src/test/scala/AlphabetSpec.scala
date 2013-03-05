@@ -1,3 +1,5 @@
+package br.com.igorbonadio.likely
+
 import org.scalatest._
 import org.scalatest.matchers._
 

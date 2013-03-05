@@ -1,3 +1,5 @@
+package br.com.igorbonadio.likely
+
 class LogProbability(v: Double) {
   val logValue = v
   def expValue = math.exp(-logValue)
