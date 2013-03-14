@@ -50,6 +50,11 @@ class ContinuousIIDModelSpec extends FlatSpec with ShouldMatchers {
     model.choose should not be === (model.choose)
   }
   
-  it should "generate a random sequence" in (pending)
+  it should "generate a random sequence" in {
+    val distribution = new NormalDistribution(0, 1)
+    val model = new ContinuousIIDModel(distribution)
+    
+    model.chooseSequence(5).length should be === (5)
+  }
   
 }

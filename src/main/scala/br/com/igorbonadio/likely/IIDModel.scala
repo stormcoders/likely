@@ -7,8 +7,12 @@ abstract class IIDModel[T](distribution: Distribution[T]) {
     case x::xs => distribution.prob(x) * prob(xs)
     case List() => Probability(1)
   }
+  
   def choose: T
-  def chooseSequence(size: Int): List[T]
+  
+  def chooseSequence(size: Int): List[T] = 
+    if (size > 0) choose :: chooseSequence(size-1)
+    else List()
 }
 
 class DiscreteIIDModel(distribution: DiscreteDistribution) extends IIDModel(distribution) {
@@ -20,10 +24,6 @@ class DiscreteIIDModel(distribution: DiscreteDistribution) extends IIDModel(dist
     }
     chooseWith((new Random()).nextDouble, distribution.probabilities, 0)
   }
-  
-  def chooseSequence(size: Int) = 
-    if (size > 0) choose :: chooseSequence(size-1)
-    else List()
 }
 
 class ContinuousIIDModel(distribution: NormalDistribution) extends IIDModel(distribution) {
@@ -37,5 +37,4 @@ class ContinuousIIDModel(distribution: NormalDistribution) extends IIDModel(dist
     }
     distribution.createMember(boxMuller)
   }
-  def chooseSequence(size: Int) = List(1.1, 2.2)
 }
