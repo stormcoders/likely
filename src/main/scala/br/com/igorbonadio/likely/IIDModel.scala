@@ -25,3 +25,8 @@ class DiscreteIIDModel(distribution: DiscreteDistribution) extends IIDModel(dist
     if (size > 0) choose :: chooseSequence(size-1)
     else List()
 }
+
+class ContinuousIIDModel(distribution: NormalDistribution) extends IIDModel(distribution) {
+  def choose = 0.1
+  def chooseSequence(size: Int) = List(1.1, 2.2)
+}

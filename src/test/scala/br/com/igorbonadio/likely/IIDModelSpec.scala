@@ -32,3 +32,18 @@ class DiscreteIIDModelSpec extends FlatSpec with ShouldMatchers {
   }
 }
 
+class ContinuousIIDModelSpec extends FlatSpec with ShouldMatchers {
+  behavior of "A Continuous IID Model"
+  
+  it should "get the probability of a given sequence" in {
+    val distribution = new NormalDistribution(0, 1)
+    val model = new ContinuousIIDModel(distribution)
+    val sequence = List(0.1, 0.2, 0.3, 0.4)
+    
+    model.prob(sequence).expValue should be (0.0218 plusOrMinus 0.0001)
+  }
+  
+  it should "generate a random symbol" in (pending)
+  it should "generate a random sequence" in (pending)
+  
+}
