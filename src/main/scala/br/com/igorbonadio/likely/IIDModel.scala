@@ -27,6 +27,15 @@ class DiscreteIIDModel(distribution: DiscreteDistribution) extends IIDModel(dist
 }
 
 class ContinuousIIDModel(distribution: NormalDistribution) extends IIDModel(distribution) {
-  def choose = 0.1
+  def choose = {
+    def boxMuller = {
+      val uniform = new Random()
+      val u1 = uniform.nextDouble
+      val u2 = uniform.nextDouble
+      val r = math.sqrt(-2*math.log(u1))
+      math.sqrt(-2*math.log(u1))*math.cos(2*math.Pi*u2)
+    }
+    distribution.createMember(boxMuller)
+  }
   def chooseSequence(size: Int) = List(1.1, 2.2)
 }

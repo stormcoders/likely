@@ -43,7 +43,13 @@ class ContinuousIIDModelSpec extends FlatSpec with ShouldMatchers {
     model.prob(sequence).expValue should be (0.0218 plusOrMinus 0.0001)
   }
   
-  it should "generate a random symbol" in (pending)
+  it should "generate a random symbol" in {
+    val distribution = new NormalDistribution(0, 1)
+    val model = new ContinuousIIDModel(distribution)
+    
+    model.choose should not be === (model.choose)
+  }
+  
   it should "generate a random sequence" in (pending)
   
 }
