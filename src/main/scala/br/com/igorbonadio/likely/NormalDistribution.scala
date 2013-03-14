@@ -1,6 +1,6 @@
 package br.com.igorbonadio.likely
 
-class NormalDistribution(mean: Double, sd: Double) {
+class NormalDistribution(mean: Double, sd: Double) extends Distribution[Double] {
   def prob(x: Double) = 
     new LogProbability(((x-mean)*(x-mean)/(2*sd*sd)) + math.log(sd*math.sqrt(2*math.Pi)) )
 }
