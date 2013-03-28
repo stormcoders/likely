@@ -19,4 +19,8 @@ class Alphabet(symbols: List[String]) {
     
   def generateSequeceOfIds(symbols: List[String]): List[Int] =
     symbols.map(symbol => id(symbol))
+
+  override def toString(): String = 
+    "Alphabet(" + symbols.mkString(", ") + ")"
+  
 }

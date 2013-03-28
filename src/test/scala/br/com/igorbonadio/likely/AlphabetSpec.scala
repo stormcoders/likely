@@ -10,6 +10,11 @@ class AlphabetSpec extends FlatSpec with ShouldMatchers {
     val casino = new Alphabet(List("Loaded", "Fair"))
     casino.alphabetMap.size should be === 2
   }
+
+  it should "have a string representation" in {
+    val casino = new Alphabet(List("Loaded", "Fair"))
+    casino.toString should be === "Alphabet(Loaded, Fair)"
+  }
   
   it should "return the number of symbols" in {
     val casino = new Alphabet(List("Loaded", "Fair"))
