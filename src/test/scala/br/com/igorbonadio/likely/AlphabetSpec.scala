@@ -47,6 +47,11 @@ class AlphabetSpec extends FlatSpec with ShouldMatchers {
     val casino = new Alphabet(List("Loaded", "Fair"))
     casino.generateSequeceOfSymbols(List(1,1, 0, 0, 1)) should be === List("Fair", "Fair", "Loaded", "Loaded", "Fair")
   }
+
+  it should "generate a stream of ids" in {
+    val casino = new Alphabet(List("Loaded", "Fair"))
+    casino.generateSequeceOfSymbols(List(1,1, 0, 0, 1)).take(5).toList should be === List("Fair", "Fair", "Loaded", "Loaded", "Fair")
+  }
   
   it should "generate a sequence of symbols" in {
     val casino = new Alphabet(List("Loaded", "Fair"))
