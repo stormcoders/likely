@@ -39,6 +39,14 @@ class DiscreteIIDModelSpec extends FlatSpec with ShouldMatchers {
     
     model.chooseSequence(5).foreach(sym => sym should (be === 0 or be === 1))
   }
+
+  it should "generate a random stream" in {
+    val alphabet = new Alphabet(List("Loaded", "Fair"))
+    val distribution = new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
+    val model = new DiscreteIIDModel(distribution)
+    
+    model.chooseStream.take(5).foreach(sym => sym should (be === 0 or be === 1))
+  }
 }
 
 class ContinuousIIDModelSpec extends FlatSpec with ShouldMatchers {
@@ -72,6 +80,13 @@ class ContinuousIIDModelSpec extends FlatSpec with ShouldMatchers {
     val model = new ContinuousIIDModel(distribution)
     
     model.chooseSequence(5).length should be === (5)
+  }
+
+  it should "generate a random stream" in {
+    val distribution = new NormalDistribution(0, 1)
+    val model = new ContinuousIIDModel(distribution)
+    
+    model.chooseStream.take(5).length should be === (5)
   }
   
 }

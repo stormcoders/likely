@@ -18,6 +18,8 @@ abstract class IIDModel[T](distribution: Distribution[T]) {
   def chooseSequence(size: Int): List[T] = 
     if (size > 0) choose :: chooseSequence(size-1)
     else List()
+
+  def chooseStream: Stream[T] = choose #:: chooseStream
 }
 
 class DiscreteIIDModel(distribution: DiscreteDistribution) extends IIDModel(distribution) {
