@@ -14,6 +14,15 @@ class DiscreteIIDModelSpec extends FlatSpec with ShouldMatchers {
     
     model.prob(sequence).expValue should be (0.16 plusOrMinus 0.0001)
   }
+
+  it should "get the probability of a given stream" in {
+    val alphabet = new Alphabet(List("Loaded", "Fair"))
+    val distribution = new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
+    val model = new DiscreteIIDModel(distribution)
+    val sequence = alphabet.generateSequeceOfIds(Stream("Fair", "Loaded"))
+    
+    model.prob(sequence).expValue should be (0.16 plusOrMinus 0.0001)
+  }
   
   it should "generate a random symbol" in {
     val alphabet = new Alphabet(List("Loaded", "Fair"))
@@ -39,6 +48,14 @@ class ContinuousIIDModelSpec extends FlatSpec with ShouldMatchers {
     val distribution = new NormalDistribution(0, 1)
     val model = new ContinuousIIDModel(distribution)
     val sequence = List(0.1, 0.2, 0.3, 0.4)
+    
+    model.prob(sequence).expValue should be (0.0218 plusOrMinus 0.0001)
+  }
+
+  it should "get the probability of a given stream" in {
+    val distribution = new NormalDistribution(0, 1)
+    val model = new ContinuousIIDModel(distribution)
+    val sequence = Stream(0.1, 0.2, 0.3, 0.4)
     
     model.prob(sequence).expValue should be (0.0218 plusOrMinus 0.0001)
   }
