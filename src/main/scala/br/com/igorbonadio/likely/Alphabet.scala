@@ -17,9 +17,6 @@ class Alphabet(symbols: List[String]) {
   def generateSequeceOfSymbols(ids: Stream[Int]): Stream[String] =
     ids.map(id => symbol(id))
     
-  def generateSequeceOfIds(symbols: List[String]): List[Int] =
-    symbols.map(symbol => id(symbol))
-
   def generateSequeceOfIds(symbols: Stream[String]): Stream[Int] =
     symbols.map(symbol => id(symbol))
 
