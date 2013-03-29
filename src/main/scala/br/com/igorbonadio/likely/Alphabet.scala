@@ -13,9 +13,6 @@ class Alphabet(symbols: List[String]) {
   def symbol(id: Int): String = 
     if (id >= symbols.length) ""
     else symbols(id)
-    
-  def generateSequeceOfSymbols(ids: List[Int]): List[String] =
-    ids.map(id => symbol(id))
 
   def generateSequeceOfSymbols(ids: Stream[Int]): Stream[String] =
     ids.map(id => symbol(id))
