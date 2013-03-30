@@ -12,4 +12,11 @@ class DiscreteDistributionSpec extends FlatSpec with ShouldMatchers {
     distribution.prob(alphabet.id("Loaded")).expValue should be (0.8 plusOrMinus 0.0001)
     distribution.prob(alphabet.id("Fair")).expValue should be (0.2 plusOrMinus 0.0001)
   }
+
+  it should "choose a symbol" in {
+    val alphabet = new Alphabet(List("Loaded", "Fair"))
+    val distribution = new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
+    
+    distribution.choose should (be === 0 or be === 1)
+  }
 }
