@@ -5,18 +5,18 @@ import org.scalatest.matchers._
 
 class DiscreteDistributionSpec extends FlatSpec with ShouldMatchers {
   behavior of "A discrete distribution"
-  
-  it should "get the probability of a given symbol" in {
+
+  trait Casino {
     val alphabet = new Alphabet(List("Loaded", "Fair"))
     val distribution = new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
+  }
+  
+  it should "get the probability of a given symbol" in new Casino {
     distribution.prob(alphabet.id("Loaded")).expValue should be (0.8 plusOrMinus 0.0001)
     distribution.prob(alphabet.id("Fair")).expValue should be (0.2 plusOrMinus 0.0001)
   }
 
-  it should "choose a symbol" in {
-    val alphabet = new Alphabet(List("Loaded", "Fair"))
-    val distribution = new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
-    
+  it should "choose a symbol" in  new Casino {
     distribution.choose should (be === 0 or be === 1)
   }
 }
