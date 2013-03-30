@@ -7,16 +7,9 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   behavior of "A probability"
   
   it should "store its log representation" in {
-    Probability(1.0).logValue should be (-math.log(1.0) plusOrMinus 0.0001)
-    Probability(0.9).logValue should be (-math.log(0.9) plusOrMinus 0.0001)
-    Probability(0.8).logValue should be (-math.log(0.8) plusOrMinus 0.0001)
-    Probability(0.7).logValue should be (-math.log(0.7) plusOrMinus 0.0001)
-    Probability(0.6).logValue should be (-math.log(0.6) plusOrMinus 0.0001)
-    Probability(0.5).logValue should be (-math.log(0.5) plusOrMinus 0.0001)
-    Probability(0.4).logValue should be (-math.log(0.4) plusOrMinus 0.0001)
-    Probability(0.3).logValue should be (-math.log(0.3) plusOrMinus 0.0001)
-    Probability(0.2).logValue should be (-math.log(0.2) plusOrMinus 0.0001)
-    Probability(0.1).logValue should be (-math.log(0.1) plusOrMinus 0.0001)
+    (1 to 10).map {i => i/10.0}.foreach {
+      p => Probability(p).logValue should be (-math.log(p) plusOrMinus 0.0001)
+    }
   }
   
   it should "show its normal [0,1] representation" in {
