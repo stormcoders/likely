@@ -6,28 +6,22 @@ import org.scalatest.matchers._
 class DiscreteIIDModelSpec extends FlatSpec with ShouldMatchers {
   behavior of "A Discrete IID Model"
 
-  it should "get the probability of a given stream" in {
+  trait IIDCasino {
     val alphabet = new Alphabet(List("Loaded", "Fair"))
     val distribution = new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
     val model = new DiscreteIIDModel(distribution)
+  }
+
+  it should "get the probability of a given stream" in new IIDCasino {
     val sequence = alphabet.generateSequeceOfIds(Stream("Fair", "Loaded"))
-    
     model.prob(sequence).expValue should be (0.16 plusOrMinus 0.0001)
   }
   
-  it should "generate a random symbol" in {
-    val alphabet = new Alphabet(List("Loaded", "Fair"))
-    val distribution = new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
-    val model = new DiscreteIIDModel(distribution)
-    
+  it should "generate a random symbol" in new IIDCasino {
     model.choose should (be === 0 or be === 1)
   }
 
-  it should "generate a random stream" in {
-    val alphabet = new Alphabet(List("Loaded", "Fair"))
-    val distribution = new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
-    val model = new DiscreteIIDModel(distribution)
-    
+  it should "generate a random stream" in new IIDCasino {
     model.chooseStream.take(5).foreach(sym => sym should (be === 0 or be === 1))
   }
 }
