@@ -2,8 +2,7 @@ package br.com.igorbonadio.likely
 
 import util.Random
 
-class DiscreteDistribution(probs: List[LogProbability]) extends Distribution[Int] {
-  val probabilities = probs
+class DiscreteDistribution(probabilities: List[LogProbability]) extends Distribution[Int] {
   val probabilityMap = ((0 to (probabilities.length - 1)) zip probabilities).toMap
   
   def prob(id: Int):LogProbability = probabilityMap(id)
