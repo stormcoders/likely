@@ -19,25 +19,25 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   }
   
   it should "multiply probabilities" in {
-    (for (x <- 1 to 10; y <- 1 to 10) yield Pair(x/10.0, y/10.0)).foreach { p => p match {
+    (for (x <- 1 to 10; y <- 1 to 10 if x*y <= 100) yield Pair(x/10.0, y/10.0)).foreach { p => p match {
       case Pair(x, y) => (Probability(x) * Probability(y)).logValue should be (Probability(x*y).logValue plusOrMinus 0.0001)
     }}
   }
   
   it should "divide probabilities" in {
-    (for (x <- 1 to 10; y <- 1 to 10) yield Pair(x/10.0, y/10.0)).foreach { p => p match {
+    (for (x <- 1 to 10; y <- 1 to 10 if x/y <= 1) yield Pair(x/10.0, y/10.0)).foreach { p => p match {
       case Pair(x, y) => (Probability(x) / Probability(y)).logValue should be (Probability(x/y).logValue plusOrMinus 0.0001)
     }}
   }
   
   it should "add probabilities" in {
-    (for (x <- 1 to 10; y <- 1 to 10) yield Pair(x/10.0, y/10.0)).foreach { p => p match {
+    (for (x <- 1 to 10; y <- 1 to 10 if x + y <= 10) yield Pair(x/10.0, y/10.0)).foreach { p => p match {
       case Pair(x, y) => (Probability(x) + Probability(y)).logValue should be (Probability(x+y).logValue plusOrMinus 0.0001)
     }}
   }
   
   it should "subtract probabilities" in {
-    (for (x <- 1 to 10; y <- 1 to 10 if x/10.0 > y/10.0) yield Pair(x/10.0, y/10.0)).foreach { p => p match {
+    (for (x <- 1 to 10; y <- 1 to 10 if x - y > 0) yield Pair(x/10.0, y/10.0)).foreach { p => p match {
       case Pair(x, y) => (Probability(x) - Probability(y)).logValue should be (Probability(x-y).logValue plusOrMinus 0.0001)
     }}
   }
