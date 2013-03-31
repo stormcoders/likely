@@ -37,11 +37,9 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   }
   
   it should "subtract probabilities" in {
-    (Probability(0.5) - Probability(0.2)).logValue should be (Probability(0.3).logValue plusOrMinus 0.0001)
-    (Probability(0.5) - Probability(0.5)).logValue should be (Probability(0.0).logValue plusOrMinus 0.0001)
-    (Probability(0.9) - Probability(0.3)).logValue should be (Probability(0.6).logValue plusOrMinus 0.0001)
-    (Probability(0.9) - Probability(0.0)).logValue should be (Probability(0.9).logValue plusOrMinus 0.0001)
-    (Probability(0.1) - Probability(0.1)).logValue should be (Probability(0.0).logValue plusOrMinus 0.0001)
+    (for (x <- 1 to 10; y <- 1 to 10 if x/10.0 > y/10.0) yield Pair(x/10.0, y/10.0)).foreach { p => p match {
+      case Pair(x, y) => (Probability(x) - Probability(y)).logValue should be (Probability(x-y).logValue plusOrMinus 0.0001)
+    }}
   }
   
   it should "have a string representation" in {
