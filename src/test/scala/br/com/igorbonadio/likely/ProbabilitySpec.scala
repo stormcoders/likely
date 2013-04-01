@@ -43,7 +43,8 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   }
   
   it should "have a string representation" in {
-    Probability(0.5).toString.toDouble should be (0.5 plusOrMinus 0.0001)
-    Probability(0.2).toString.toDouble should be (0.2 plusOrMinus 0.0001)
+    (1 to 20).map {i => i/20.0}.foreach {p => 
+      Probability(p).toString.toDouble should be (p plusOrMinus 0.0001)
+    }
   }
 }
