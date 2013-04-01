@@ -18,7 +18,7 @@ class DiscreteIIDModelSpec extends FlatSpec with ShouldMatchers {
   }
   
   it should "generate a random symbol" in new IIDCasino {
-    model.choose should (be === 0 or be === 1)
+    model.chooseStream.head should (be === 0 or be === 1)
   }
 
   it should "generate a random stream" in new IIDCasino {
@@ -40,7 +40,7 @@ class ContinuousIIDModelSpec extends FlatSpec with ShouldMatchers {
   }
   
   it should "generate a random symbol" in new IIDNormal {
-    model.choose should not be === (model.choose)
+    model.chooseStream.head should not be === (model.chooseStream.head)
   }
 
   it should "generate a random stream" in new IIDNormal {
