@@ -8,7 +8,7 @@ abstract class IIDModel[T](distribution: Distribution[T]) {
     case Stream() => Probability(1)
   }
 
-  def chooseStream: Stream[T] = distribution.choose #:: chooseStream
+  def choose: Stream[T] = distribution.choose #:: choose
 }
 
 class DiscreteIIDModel(distribution: DiscreteDistribution) extends IIDModel(distribution)
