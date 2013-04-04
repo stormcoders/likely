@@ -18,3 +18,8 @@ object DiscreteIIDModel {
   def train(sequence: Stream[Int]): DiscreteIIDModel = 
     new DiscreteIIDModel(DiscreteDistribution.train(sequence))
 }
+
+object ContinuousIIDModel {
+  def train(sequence: Stream[Double]): ContinuousIIDModel = 
+    new ContinuousIIDModel(NormalDistribution.train(sequence))
+}

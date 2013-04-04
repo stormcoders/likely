@@ -18,9 +18,8 @@ class DiscreteDistribution(probabilities: List[LogProbability]) extends Distribu
 }
 
 object DiscreteDistribution extends DistributionObject[Int] {
-  def train(sequence: Stream[Int]): DiscreteDistribution = {
+  def train(sequence: Stream[Int]): DiscreteDistribution =
     new DiscreteDistribution(
       sequence.groupBy(x => x).toSeq.sortBy(_._1).map { case (k, v) => 
         Probability(v.length.toDouble/sequence.length) }.toList)
-  }
 }

@@ -53,5 +53,11 @@ class ContinuousIIDModelSpec extends FlatSpec with ShouldMatchers {
   it should "generate a random stream" in new IIDNormal {
     model.choose.take(5).length should be === (5)
   }
+
+  it should "be trained by a random stream" in new IIDNormal {
+    val randomNumbers = (1 to 10000).map(i => distribution.choose)
+    val m = ContinuousIIDModel.train(randomNumbers.toStream)
+    m.prob(Stream(0.1, 0.2, 0.3, 0.4)).expValue should be (0.0218 plusOrMinus 0.001)
+  }
   
 }
