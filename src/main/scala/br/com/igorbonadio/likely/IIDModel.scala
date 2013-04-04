@@ -13,3 +13,8 @@ abstract class IIDModel[T](distribution: Distribution[T]) {
 
 class DiscreteIIDModel(distribution: DiscreteDistribution) extends IIDModel(distribution)
 class ContinuousIIDModel(distribution: NormalDistribution) extends IIDModel(distribution)
+
+object DiscreteIIDModel {
+  def train(sequence: Stream[Int]): DiscreteIIDModel = 
+    new DiscreteIIDModel(DiscreteDistribution.train(sequence))
+}

@@ -24,6 +24,13 @@ class DiscreteIIDModelSpec extends FlatSpec with ShouldMatchers {
   it should "generate a random stream" in new IIDCasino {
     model.choose.take(5).foreach(sym => sym should (be === 0 or be === 1))
   }
+
+  it should "be trained by a sequence of symbols" in new IIDCasino {
+    val m = DiscreteIIDModel.train(
+      alphabet.generateSequeceOfIds(Stream("Fair", "Fair", "Loaded", "Loaded", "Fair")))
+    m.prob(alphabet.generateSequeceOfIds(Stream("Fair", "Loaded"))).
+      expValue should be (0.24 plusOrMinus 0.0001)
+  }
 }
 
 class ContinuousIIDModelSpec extends FlatSpec with ShouldMatchers {
