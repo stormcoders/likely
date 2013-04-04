@@ -18,3 +18,12 @@ class NormalDistribution(mean: Double, sd: Double) extends Distribution[Double] 
     createMember(boxMuller)
   }
 }
+
+object NormalDistribution {
+  def train(randomNumbers: Stream[Double]): NormalDistribution = {
+    val mean = randomNumbers.foldLeft(0.0) { (a, b) => a + b/randomNumbers.length }
+    val sumOfSquares = randomNumbers.foldLeft(0.0d){(a, b) => a + Math.pow(b - mean,2)}
+    val sd = Math.sqrt(sumOfSquares/randomNumbers.length)
+    new NormalDistribution(mean, sd)
+  }
+}
