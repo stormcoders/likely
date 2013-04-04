@@ -11,15 +11,19 @@ abstract class IIDModel[T](distribution: Distribution[T]) {
   def choose: Stream[T] = distribution.choose #:: choose
 }
 
+trait IIModelObject[T] {
+  def train(trainingSet: Stream[T]): IIDModel[T]
+}
+
 class DiscreteIIDModel(distribution: DiscreteDistribution) extends IIDModel(distribution)
 class ContinuousIIDModel(distribution: NormalDistribution) extends IIDModel(distribution)
 
-object DiscreteIIDModel {
+object DiscreteIIDModel extends IIModelObject[Int] {
   def train(sequence: Stream[Int]): DiscreteIIDModel = 
     new DiscreteIIDModel(DiscreteDistribution.train(sequence))
 }
 
-object ContinuousIIDModel {
+object ContinuousIIDModel extends IIModelObject[Double] {
   def train(sequence: Stream[Double]): ContinuousIIDModel = 
     new ContinuousIIDModel(NormalDistribution.train(sequence))
 }
