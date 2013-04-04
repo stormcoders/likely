@@ -10,13 +10,18 @@ class NormalDistributionSpec extends FlatSpec with ShouldMatchers {
     val distribution = new NormalDistribution(0, 1)
   }
 
-  it should "get the probability of a given symbol" in new DistributionFixture {
+  it should "get the probability of a given number" in new DistributionFixture {
     distribution.prob(2).expValue should be (0.0539 plusOrMinus 0.0001)
     distribution.prob(1).expValue should be (0.2419 plusOrMinus 0.0001)
     distribution.prob(-0.5).expValue should be (0.3520 plusOrMinus 0.0001)
   }
 
-  it should "choose a symbol" in new DistributionFixture {
-    distribution.choose should not be === (distribution.choose)
+  it should "choose generate numbers according to the normal distribution" in new DistributionFixture {
+    val randomNumbers = (1 to 10000).map(i => distribution.choose)
+    val mean = randomNumbers.foldLeft(0.0) { (a, b) => a + b/randomNumbers.length }
+    val sumOfSquares = randomNumbers.foldLeft(0.0d){(a, b) => a + Math.pow(b - mean,2)}
+    val sd = Math.sqrt(sumOfSquares/randomNumbers.length)
+    mean should be (0.0 plusOrMinus 0.01)
+    sd should be (1.0 plusOrMinus 0.01)
   }
 }
