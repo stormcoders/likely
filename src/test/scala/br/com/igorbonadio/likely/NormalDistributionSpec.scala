@@ -28,8 +28,8 @@ class NormalDistributionSpec extends FlatSpec with ShouldMatchers {
   it should "be trained by a given sequence of numbers" in new DistributionFixture {
     val randomNumbers = (1 to 10000).map(i => distribution.choose)
     val trainedDistribution = NormalDistribution.train(randomNumbers.toStream)
-    trainedDistribution.prob(2).expValue should be (0.0539 plusOrMinus 0.1)
-    trainedDistribution.prob(1).expValue should be (0.2419 plusOrMinus 0.1)
-    trainedDistribution.prob(-0.5).expValue should be (0.3520 plusOrMinus 0.1)
+    trainedDistribution.prob(2).expValue should be (distribution.prob(2).expValue plusOrMinus 0.1)
+    trainedDistribution.prob(1).expValue should be (distribution.prob(1).expValue plusOrMinus 0.1)
+    trainedDistribution.prob(-0.5).expValue should be (distribution.prob(-0.5).expValue plusOrMinus 0.1)
   }
 }
