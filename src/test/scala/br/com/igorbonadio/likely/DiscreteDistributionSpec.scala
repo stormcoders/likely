@@ -19,4 +19,12 @@ class DiscreteDistributionSpec extends FlatSpec with ShouldMatchers {
   it should "choose a symbol" in  new Casino {
     distribution.choose should (be === 0 or be === 1)
   }
+
+  it should "be trained by a stream of symbols" in {
+    val alphabet = new Alphabet(List("Loaded", "Fair"))
+    val distribution = DiscreteDistribution.train(
+      alphabet.generateSequeceOfIds(Stream("Fair", "Fair", "Loaded", "Loaded", "Fair")))
+    distribution.prob(alphabet.id("Loaded")).expValue should be (0.4 plusOrMinus 0.0001)
+    distribution.prob(alphabet.id("Fair")).expValue should be (0.6 plusOrMinus 0.0001)
+  }
 }
