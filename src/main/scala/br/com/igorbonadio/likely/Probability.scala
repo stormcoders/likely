@@ -27,6 +27,9 @@ class LogProbability(v: Double) {
 
   def <(p: LogProbability): Boolean =
     logValue > p.logValue
+
+  def <=(p: LogProbability): Boolean =
+    logValue >= p.logValue
     
   override def toString:String = expValue.toString
 }
