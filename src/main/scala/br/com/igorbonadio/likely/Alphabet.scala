@@ -1,5 +1,7 @@
 package br.com.igorbonadio.likely
 
+import scala.collection.immutable.NumericRange
+
 class Alphabet(symbols: List[String]) {
   val alphabetMap = (symbols zip (0 to (symbols.length-1))).toMap
   
@@ -27,4 +29,6 @@ class Alphabet(symbols: List[String]) {
 
 object Alphabet {
   def apply(symbols: String*) = new Alphabet(symbols.toList)
+  def apply(symbols: Range) = new Alphabet(symbols.toList.map(_.toString))
+  def apply(symbols: NumericRange[Char]) = new Alphabet(symbols.toList.map(_.toString))
 }

@@ -8,7 +8,7 @@ class LanguageClassifier {
   // training set
   val pt = justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/pt.txt"))
   val en = justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt"))
-  val alphabet = new Alphabet(('A' to 'Z').toList.map(_.toString))
+  val alphabet = Alphabet('A' to 'Z')
   val ptModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(pt.toStream))
   val enModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(en.toStream))
 

@@ -47,4 +47,14 @@ class AlphabetSpec extends FlatSpec with ShouldMatchers {
   it should "generate a stream of ids" in new Casino {
     casino.generateSequeceOfIds(Stream("Fair", "Fair", "Loaded", "Loaded", "Fair")).toList should be === List(1,1, 0, 0, 1)
   }
+
+  it should "be defined by a range (int)" in {
+    val alphabet = Alphabet(1 to 10)
+    alphabet.size should be === 10
+  }
+
+  it should "be defined by a range (char)" in {
+    val alphabet = Alphabet('A' to 'Z')
+    alphabet.size should be === 26
+  }
 }
