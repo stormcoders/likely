@@ -1,13 +1,14 @@
 package br.com.igorbonadio.likely.examples.language_classifier
 
+import scala.io.Source
+
 import br.com.igorbonadio.likely._
 
 class LanguageClassifier {
   // training set
-  val pt = justLetters(scala.io.Source.fromFile("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/pt.txt").mkString)
-  val en = justLetters(scala.io.Source.fromFile("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt").mkString)
-  val alphabet = new Alphabet(List("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", 
-                                   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"))
+  val pt = justLetters(Source.fromFile("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/pt.txt").mkString)
+  val en = justLetters(Source.fromFile("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt").mkString)
+  val alphabet = new Alphabet(('A' to 'Z').toList.map(_.toString))
   val ptModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(pt.toStream))
   val enModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(en.toStream))
 
