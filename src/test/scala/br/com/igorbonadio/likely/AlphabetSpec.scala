@@ -7,7 +7,7 @@ class AlphabetSpec extends FlatSpec with ShouldMatchers {
   behavior of "A alphabet"
 
   trait Casino {
-    val casino = new Alphabet(List("Loaded", "Fair"))
+    val casino = Alphabet("Loaded", "Fair")
   }
   
   it should "store a set of symbols" in new Casino {

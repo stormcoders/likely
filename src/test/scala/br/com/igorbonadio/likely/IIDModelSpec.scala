@@ -7,7 +7,7 @@ class DiscreteIIDModelSpec extends FlatSpec with ShouldMatchers {
   behavior of "A Discrete IID Model"
 
   trait IIDCasino {
-    val alphabet = new Alphabet(List("Loaded", "Fair"))
+    val alphabet = Alphabet("Loaded", "Fair")
     val distribution = new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
     val model = new DiscreteIIDModel(distribution)
   }

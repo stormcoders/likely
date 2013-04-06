@@ -24,3 +24,7 @@ class Alphabet(symbols: List[String]) {
     "Alphabet(" + symbols.mkString(", ") + ")"
   
 }
+
+object Alphabet {
+  def apply(symbols: String*) = new Alphabet(symbols.toList)
+}
