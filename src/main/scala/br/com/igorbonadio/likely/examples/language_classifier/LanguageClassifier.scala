@@ -6,11 +6,14 @@ import br.com.igorbonadio.likely._
 
 class LanguageClassifier {
   // training set
-  val pt = justLetters(Source.fromFile("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/pt.txt").mkString)
-  val en = justLetters(Source.fromFile("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt").mkString)
+  val pt = justLetters(fiteToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/pt.txt"))
+  val en = justLetters(fiteToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt"))
   val alphabet = new Alphabet(('A' to 'Z').toList.map(_.toString))
   val ptModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(pt.toStream))
   val enModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(en.toStream))
+
+  def fiteToString(filename: String) =
+    Source.fromFile(filename).mkString
 
   def justLetters(sequence: String) =
     sequence.toUpperCase.toList.filter(c => c.isLetter && c <= 'z').map(_.toString)
