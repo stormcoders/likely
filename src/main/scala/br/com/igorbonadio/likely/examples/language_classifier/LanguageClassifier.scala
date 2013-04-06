@@ -1,12 +1,12 @@
-package br.com.igorbonadio.likely.examples
+package br.com.igorbonadio.likely.examples.language_classifier
 
 import br.com.igorbonadio.likely._
 
 class LanguageClassifier {
   // training set
-  val pt = scala.io.Source.fromFile("src/main/scala/br/com/igorbonadio/likely/examples/language/pt.txt").
+  val pt = scala.io.Source.fromFile("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/pt.txt").
     mkString.toUpperCase.toList.filter(c => c.isLetter && c <= 'z').map(x => x.toString)
-  val en = scala.io.Source.fromFile("src/main/scala/br/com/igorbonadio/likely/examples/language/en.txt").
+  val en = scala.io.Source.fromFile("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt").
     mkString.toUpperCase.toList.filter(c => c.isLetter && c <= 'z').map(x => x.toString)
   val alphabet = new Alphabet(List("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", 
                                    "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"))
@@ -30,7 +30,7 @@ class LanguageClassifier {
   }
 }
 
-object Language {
+object LanguageClassifier {
   def main(args: Array[String]) {
     val classifier = new LanguageClassifier
     println("classification = " + classifier.classify(args(0), true))

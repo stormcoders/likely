@@ -1,9 +1,9 @@
-package br.com.igorbonadio.likely.examples
+package br.com.igorbonadio.likely.examples.language_classifier
 
 import org.scalatest._
 import org.scalatest.matchers._
 
-class LanguageSpec extends FlatSpec with ShouldMatchers {
+class LanguageClassifierSpec extends FlatSpec with ShouldMatchers {
   behavior of "A Language Classifier"
 
   trait PortugueseEnglishClassifier {
