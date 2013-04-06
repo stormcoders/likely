@@ -12,12 +12,6 @@ class LanguageClassifier {
   val ptModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(pt.toStream))
   val enModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(en.toStream))
 
-  def fiteToString(filename: String) =
-    Source.fromFile(filename).mkString
-
-  def justLetters(sequence: String) =
-    sequence.toUpperCase.toList.filter(c => c.isLetter && c <= 'z').map(_.toString)
-
   def classify(text: String, debug: Boolean) = {
     val test = justLetters(text)
     val ptProb = ptModel.prob(alphabet.generateSequeceOfIds(test.toStream))
@@ -33,6 +27,12 @@ class LanguageClassifier {
     if (ptProb > enProb) "pt" 
     else "en"
   }
+
+  private def fiteToString(filename: String) =
+    Source.fromFile(filename).mkString
+
+  private def justLetters(sequence: String) =
+    sequence.toUpperCase.toList.filter(c => c.isLetter && c <= 'z').map(_.toString)
 }
 
 object LanguageClassifier {
