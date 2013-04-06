@@ -14,7 +14,7 @@ class DiscreteIIDModelSpec extends FlatSpec with ShouldMatchers {
 
   it should "get the probability of a given stream" in new IIDCasino {
     model.prob(alphabet.generateSequeceOfIds(Stream("Fair", "Loaded"))).
-      expValue should be (0.16 plusOrMinus 0.0001)
+      expValue should be (0.16 plusOrMinus 0.0005)
   }
   
   it should "generate a random symbol" in new IIDCasino {
@@ -29,7 +29,7 @@ class DiscreteIIDModelSpec extends FlatSpec with ShouldMatchers {
     val m = DiscreteIIDModel.train(
       alphabet.generateSequeceOfIds(Stream("Fair", "Fair", "Loaded", "Loaded", "Fair")))
     m.prob(alphabet.generateSequeceOfIds(Stream("Fair", "Loaded"))).
-      expValue should be (0.24 plusOrMinus 0.0001)
+      expValue should be (0.24 plusOrMinus 0.0005)
   }
 }
 
@@ -43,7 +43,7 @@ class ContinuousIIDModelSpec extends FlatSpec with ShouldMatchers {
 
   it should "get the probability of a given stream" in new IIDNormal {
     model.prob(Stream(0.1, 0.2, 0.3, 0.4)).
-      expValue should be (0.0218 plusOrMinus 0.0001)
+      expValue should be (0.0218 plusOrMinus 0.0005)
   }
   
   it should "generate a random symbol" in new IIDNormal {
@@ -57,7 +57,7 @@ class ContinuousIIDModelSpec extends FlatSpec with ShouldMatchers {
   it should "be trained by a random stream" in new IIDNormal {
     val randomNumbers = (1 to 10000).map(i => distribution.choose)
     val m = ContinuousIIDModel.train(randomNumbers.toStream)
-    m.prob(Stream(0.1, 0.2, 0.3, 0.4)).expValue should be (0.0218 plusOrMinus 0.001)
+    m.prob(Stream(0.1, 0.2, 0.3, 0.4)).expValue should be (0.0218 plusOrMinus 0.005)
   }
   
 }
