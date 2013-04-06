@@ -13,7 +13,7 @@ class LanguageClassifier {
   val enModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(en.toStream))
 
   def justLetters(sequence: String) =
-    sequence.toUpperCase.toList.filter(c => c.isLetter && c <= 'z').map(x => x.toString)
+    sequence.toUpperCase.toList.filter(c => c.isLetter && c <= 'z').map(_.toString)
 
   def classify(text: String, debug: Boolean) = {
     val test = justLetters(text)
