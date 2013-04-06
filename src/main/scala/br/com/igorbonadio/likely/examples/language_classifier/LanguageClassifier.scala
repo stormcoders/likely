@@ -9,13 +9,13 @@ class LanguageClassifier {
   val pt = justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/pt.txt"))
   val en = justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt"))
   val alphabet = Alphabet('A' to 'Z')
-  val ptModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(pt.toStream))
-  val enModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(en.toStream))
+  val ptModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(pt))
+  val enModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(en))
 
   def classify(text: String, debug: Boolean) = {
     val test = justLetters(text)
-    val ptProb = ptModel.prob(alphabet.generateSequeceOfIds(test.toStream))
-    val enProb = enModel.prob(alphabet.generateSequeceOfIds(test.toStream))
+    val ptProb = ptModel.prob(alphabet.generateSequeceOfIds(test))
+    val enProb = enModel.prob(alphabet.generateSequeceOfIds(test))
     
     if (debug) {
       print("ptProb = ")
@@ -32,7 +32,7 @@ class LanguageClassifier {
     Source.fromFile(filename).mkString
 
   private def justLetters(sequence: String) =
-    sequence.toUpperCase.toList.filter(c => c.isLetter && c <= 'z').map(_.toString)
+    sequence.toUpperCase.toList.filter(c => c.isLetter && c <= 'z').map(_.toString).toStream
 }
 
 object LanguageClassifier {
