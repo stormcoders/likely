@@ -6,8 +6,8 @@ import br.com.igorbonadio.likely._
 
 class LanguageClassifier {
   // training set
-  val pt = justLetters(fiteToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/pt.txt"))
-  val en = justLetters(fiteToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt"))
+  val pt = justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/pt.txt"))
+  val en = justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt"))
   val alphabet = new Alphabet(('A' to 'Z').toList.map(_.toString))
   val ptModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(pt.toStream))
   val enModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(en.toStream))
@@ -28,7 +28,7 @@ class LanguageClassifier {
     else "en"
   }
 
-  private def fiteToString(filename: String) =
+  private def fileToString(filename: String) =
     Source.fromFile(filename).mkString
 
   private def justLetters(sequence: String) =
