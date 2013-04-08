@@ -1,6 +1,6 @@
 package br.com.igorbonadio.likely
 
-class BayesClassifier[T](models: Map[String, IIDModel[T]]) {
+class BayesianClassifier[T](models: Map[String, IIDModel[T]]) {
   def classify(sequence: Stream[T]) = {
     def classify2(m: List[(String, IIDModel[T])], prob: List[(String, LogProbability)]): List[(String, LogProbability)] = m match {
       case List() => prob

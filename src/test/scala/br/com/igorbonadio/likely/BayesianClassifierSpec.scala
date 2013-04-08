@@ -3,8 +3,8 @@ package br.com.igorbonadio.likely
 import org.scalatest._
 import org.scalatest.matchers._
 
-class BayesClassifierSpec extends FlatSpec with ShouldMatchers {
-  behavior of "A Bayes Classifier"
+class BayesianClassifierSpec extends FlatSpec with ShouldMatchers {
+  behavior of "A Bayesian Classifier"
 
   it should "choose between classes" in {
     val alphabet = Alphabet("Loaded", "Fair")
@@ -15,7 +15,7 @@ class BayesClassifierSpec extends FlatSpec with ShouldMatchers {
     val distribution2 = new DiscreteDistribution(List(Probability(0.2), Probability(0.8)))
     val model2 = new DiscreteIIDModel(distribution2)
 
-    val classifier = new BayesClassifier(Map(
+    val classifier = new BayesianClassifier(Map(
       "model1" -> model1,
       "model2" -> model2
     ))
