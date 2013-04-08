@@ -9,15 +9,13 @@ class BayesianClassifierSpec extends FlatSpec with ShouldMatchers {
   it should "choose between classes" in {
     val alphabet = Alphabet("Loaded", "Fair")
     
-    val distribution1 = new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
-    val model1 = new DiscreteIIDModel(distribution1)
-
-    val distribution2 = new DiscreteDistribution(List(Probability(0.2), Probability(0.8)))
-    val model2 = new DiscreteIIDModel(distribution2)
-
     val classifier = new BayesianClassifier(Map(
-      "model1" -> model1,
-      "model2" -> model2
+      "model1" -> new DiscreteIIDModel(
+        new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
+      ),
+      "model2" -> new DiscreteIIDModel(
+        new DiscreteDistribution(List(Probability(0.2), Probability(0.8)))
+      )
     ))
 
     classifier.classify(alphabet.generateSequeceOfIds(Stream("Fair", "Loaded", "Fair")))._1 should be === "model2"
