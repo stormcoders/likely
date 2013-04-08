@@ -9,3 +9,8 @@ class BayesianClassifier[T](models: Map[String, IIDModel[T]]) {
     classify2(models.toList, List()).reduceLeft{(a, b) => if (a._2 > b._2) a else b}
   }
 }
+
+object BayesianClassifier {
+  def apply[T](models: (String, IIDModel[T])*) = 
+    new BayesianClassifier(models.toMap)
+}
