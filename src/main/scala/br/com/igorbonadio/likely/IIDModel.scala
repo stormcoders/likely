@@ -19,6 +19,9 @@ class DiscreteIIDModel(distribution: DiscreteDistribution) extends IIDModel(dist
 class ContinuousIIDModel(distribution: NormalDistribution) extends IIDModel(distribution)
 
 object DiscreteIIDModel extends IIModelObject[Int] {
+  def apply(probabilities: LogProbability*) =
+    new DiscreteIIDModel(new DiscreteDistribution(probabilities.toList))
+
   def train(sequence: Stream[Int]): DiscreteIIDModel = 
     new DiscreteIIDModel(DiscreteDistribution.train(sequence))
 }
