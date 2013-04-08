@@ -11,10 +11,10 @@ class BayesianClassifierSpec extends FlatSpec with ShouldMatchers {
     
     val classifier = BayesianClassifier(
       "model1" -> new DiscreteIIDModel(
-        new DiscreteDistribution(List(Probability(0.8), Probability(0.2)))
+        DiscreteDistribution(Probability(0.8), Probability(0.2))
       ),
       "model2" -> new DiscreteIIDModel(
-        new DiscreteDistribution(List(Probability(0.2), Probability(0.8)))
+        DiscreteDistribution(Probability(0.2), Probability(0.8))
       )
     )
 
