@@ -9,11 +9,10 @@ class LanguageClassifier {
   val pt = justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/pt.txt"))
   val en = justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt"))
   val alphabet = Alphabet('A' to 'Z')
-  val ptModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(pt))
-  val enModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(en))
+  
   val classifier = new BayesianClassifier(Map(
-    "portuguese" -> ptModel,
-    "english" -> enModel
+    "portuguese" -> DiscreteIIDModel.train(alphabet.generateSequeceOfIds(pt)),
+    "english" -> DiscreteIIDModel.train(alphabet.generateSequeceOfIds(en))
   ))
 
   def classify(text: String) = {
