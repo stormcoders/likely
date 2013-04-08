@@ -15,10 +15,8 @@ class LanguageClassifier {
         justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt"))))
   ))
 
-  def classify(text: String) = {
-    val test = justLetters(text)
-    classifier.classify(alphabet.generateSequeceOfIds(test))
-  }
+  def classify(text: String) =
+    classifier.classify(alphabet.generateSequeceOfIds(justLetters(text)))
 
   private def fileToString(filename: String) =
     Source.fromFile(filename).mkString
