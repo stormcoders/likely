@@ -36,7 +36,7 @@ class ContinuousIIDModelSpec extends FlatSpec with ShouldMatchers {
   behavior of "A Continuous IID Model"
 
   trait IIDNormal {
-    val distribution = new NormalDistribution(0, 1)
+    val distribution = NormalDistribution(0, 1)
     val model = new ContinuousIIDModel(distribution)
   }
 

@@ -20,6 +20,9 @@ class NormalDistribution(mean: Double, sd: Double) extends Distribution[Double] 
 }
 
 object NormalDistribution extends DistributionObject[Double] {
+  def apply(mean: Double, sd: Double) =
+    new NormalDistribution(mean, sd)
+    
   def train(randomNumbers: Stream[Double]): NormalDistribution = {
     val mean = randomNumbers.foldLeft(0.0) { (a, b) => a + b/randomNumbers.length }
     val sumOfSquares = randomNumbers.foldLeft(0.0d){(a, b) => a + Math.pow(b - mean,2)}

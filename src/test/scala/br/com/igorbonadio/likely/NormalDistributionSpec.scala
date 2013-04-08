@@ -7,7 +7,7 @@ class NormalDistributionSpec extends FlatSpec with ShouldMatchers {
   behavior of "A normal distribution"
   
   trait DistributionFixture {
-    val distribution = new NormalDistribution(0, 1)
+    val distribution = NormalDistribution(0, 1)
   }
 
   it should "get the probability of a given number" in new DistributionFixture {
