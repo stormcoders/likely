@@ -5,14 +5,14 @@ import scala.io.Source
 import br.com.igorbonadio.likely._
 
 class LanguageClassifier {
-  // training set
-  val pt = justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/pt.txt"))
-  val en = justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt"))
   val alphabet = Alphabet('A' to 'Z')
-  
   val classifier = new BayesianClassifier(Map(
-    "portuguese" -> DiscreteIIDModel.train(alphabet.generateSequeceOfIds(pt)),
-    "english" -> DiscreteIIDModel.train(alphabet.generateSequeceOfIds(en))
+    "portuguese" -> DiscreteIIDModel.train(
+      alphabet.generateSequeceOfIds(
+        justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/pt.txt")))),
+    "english" -> DiscreteIIDModel.train(
+      alphabet.generateSequeceOfIds(
+        justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt"))))
   ))
 
   def classify(text: String) = {
