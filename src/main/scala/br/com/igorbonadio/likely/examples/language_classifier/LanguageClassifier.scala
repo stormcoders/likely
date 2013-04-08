@@ -11,21 +11,14 @@ class LanguageClassifier {
   val alphabet = Alphabet('A' to 'Z')
   val ptModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(pt))
   val enModel = DiscreteIIDModel.train(alphabet.generateSequeceOfIds(en))
+  val classifier = new BayesianClassifier(Map(
+    "portuguese" -> ptModel,
+    "english" -> enModel
+  ))
 
-  def classify(text: String, debug: Boolean) = {
+  def classify(text: String) = {
     val test = justLetters(text)
-    val ptProb = ptModel.prob(alphabet.generateSequeceOfIds(test))
-    val enProb = enModel.prob(alphabet.generateSequeceOfIds(test))
-    
-    if (debug) {
-      print("ptProb = ")
-      println(ptProb)
-      print("enProb = ")
-      println(enProb)
-    }
-
-    if (ptProb > enProb) "pt" 
-    else "en"
+    classifier.classify(alphabet.generateSequeceOfIds(test))
   }
 
   private def fileToString(filename: String) =
@@ -37,7 +30,7 @@ class LanguageClassifier {
 
 object LanguageClassifier {
   def main(args: Array[String]) {
-    val classifier = new LanguageClassifier
-    println("classification = " + classifier.classify(args(0), true))
+    val languageClassifier = new LanguageClassifier
+    println("classification = " + languageClassifier.classify(args(0)))
   }
 }

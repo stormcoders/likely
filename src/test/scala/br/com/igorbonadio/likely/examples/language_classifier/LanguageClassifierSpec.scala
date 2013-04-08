@@ -11,18 +11,18 @@ class LanguageClassifierSpec extends FlatSpec with ShouldMatchers {
   }
 
   it should "classify portuguese texts" in new PortugueseEnglishClassifier {
-    classifier.classify("Pequena, eu te amo!", false) should be === "pt"
-    classifier.classify("Hoje comi peixei.", false) should be === "pt"
-    classifier.classify("Nao posso perder a novela hoje!!!", false) should be === "pt"
-    classifier.classify("Nao existe lugar como nossa casa...", false) should be === "pt"
-    classifier.classify("Isso funciona! Incrivel!!!", false) should be === "pt"
+    classifier.classify("Pequena, eu te amo!")._1 should be === "portuguese"
+    classifier.classify("Hoje comi peixei.")._1 should be === "portuguese"
+    classifier.classify("Nao posso perder a novela hoje!!!")._1 should be === "portuguese"
+    classifier.classify("Nao existe lugar como nossa casa...")._1 should be === "portuguese"
+    classifier.classify("Isso funciona! Incrivel!!!")._1 should be === "portuguese"
   }
 
   it should "classify english texts" in new PortugueseEnglishClassifier {
-    classifier.classify("Baby, I love you!", false) should be === "en"
-    classifier.classify("Today, I ate fish.", false) should be === "en"
-    classifier.classify("I cant miss the today's episode of the soap opera!!!", false) should be === "en"
-    classifier.classify("There is no place like home", false) should be === "en"
-    classifier.classify("It works! Awesome!!!", false) should be === "en"
+    classifier.classify("Baby, I love you!")._1 should be === "english"
+    classifier.classify("Today, I ate fish.")._1 should be === "english"
+    classifier.classify("I cant miss the today's episode of the soap opera!!!")._1 should be === "english"
+    classifier.classify("There is no place like home")._1 should be === "english"
+    classifier.classify("It works! Awesome!!!")._1 should be === "english"
   }
 }
