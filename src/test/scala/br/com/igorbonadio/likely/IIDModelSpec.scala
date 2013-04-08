@@ -37,7 +37,7 @@ class ContinuousIIDModelSpec extends FlatSpec with ShouldMatchers {
 
   trait IIDNormal {
     val distribution = NormalDistribution(0, 1)
-    val model = new ContinuousIIDModel(distribution)
+    val model = ContinuousIIDModel(distribution)
   }
 
   it should "get the probability of a given stream" in new IIDNormal {

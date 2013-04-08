@@ -27,6 +27,9 @@ object DiscreteIIDModel extends IIModelObject[Int] {
 }
 
 object ContinuousIIDModel extends IIModelObject[Double] {
+  def apply(distribution: NormalDistribution) = 
+    new ContinuousIIDModel(distribution)
+    
   def train(sequence: Stream[Double]): ContinuousIIDModel = 
     new ContinuousIIDModel(NormalDistribution.train(sequence))
 }
