@@ -10,12 +10,8 @@ class BayesianClassifierSpec extends FlatSpec with ShouldMatchers {
     val alphabet = Alphabet("Loaded", "Fair")
     
     val classifier = BayesianClassifier(
-      "model1" -> new DiscreteIIDModel(
-        DiscreteDistribution(Probability(0.8), Probability(0.2))
-      ),
-      "model2" -> new DiscreteIIDModel(
-        DiscreteDistribution(Probability(0.2), Probability(0.8))
-      )
+      "model1" -> DiscreteIIDModel(Probability(0.8), Probability(0.2)),
+      "model2" -> DiscreteIIDModel(Probability(0.2), Probability(0.8))
     )
 
     classifier.classify(alphabet.generateSequeceOfIds(Stream("Fair", "Loaded", "Fair")))._1 should be === "model2"
