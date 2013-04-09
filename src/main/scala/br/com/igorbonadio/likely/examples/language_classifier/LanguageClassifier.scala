@@ -9,14 +9,17 @@ class LanguageClassifier {
   val classifier = BayesianClassifier(
     "portuguese" -> DiscreteIIDModel.train(
       alphabet.generateSequeceOfIds(
-        justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/pt.txt")))),
+        justLetters(fileToString(full_path("pt.txt"))))),
     "english" -> DiscreteIIDModel.train(
       alphabet.generateSequeceOfIds(
-        justLetters(fileToString("src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/en.txt"))))
+        justLetters(fileToString(full_path("en.txt")))))
   )
 
   def classify(text: String) =
     classifier.classify(alphabet.generateSequeceOfIds(justLetters(text)))
+
+  private def full_path(filename: String) =
+    "src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/" + filename
 
   private def fileToString(filename: String) =
     Source.fromFile(filename).mkString
