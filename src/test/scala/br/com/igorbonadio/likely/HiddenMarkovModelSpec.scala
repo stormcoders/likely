@@ -29,7 +29,7 @@ class HiddenMarkovModelSpec extends FlatSpec with ShouldMatchers {
     )
     val x = symbols.generateSequeceOfIds(Stream("1", "2"))
     val y = states.generateSequeceOfIds(Stream("Fair", "Loaded"))
-    val hmm = new HiddenMarkovModel(states, symbols, emissions, transitions)
+    val hmm = new HiddenMarkovModel(emissions, transitions)
     hmm.prob(x, y).expValue should be ((0.95*(1.0/6)*0.1*0.1) plusOrMinus 0.0001)
   }
 }
