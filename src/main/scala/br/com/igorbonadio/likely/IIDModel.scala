@@ -11,14 +11,14 @@ abstract class IIDModel[T](distribution: Distribution[T]) {
   def choose: Stream[T] = distribution.choose #:: choose
 }
 
-trait IIModelObject[T] {
+trait IIDModelObject[T] {
   def train(trainingSet: Stream[T]): IIDModel[T]
 }
 
 class DiscreteIIDModel(distribution: DiscreteDistribution) extends IIDModel(distribution)
 class ContinuousIIDModel(distribution: NormalDistribution) extends IIDModel(distribution)
 
-object DiscreteIIDModel extends IIModelObject[Int] {
+object DiscreteIIDModel extends IIDModelObject[Int] {
   def apply(probabilities: LogProbability*) =
     new DiscreteIIDModel(new DiscreteDistribution(probabilities.toList))
 
@@ -26,7 +26,7 @@ object DiscreteIIDModel extends IIModelObject[Int] {
     new DiscreteIIDModel(DiscreteDistribution.train(sequence))
 }
 
-object ContinuousIIDModel extends IIModelObject[Double] {
+object ContinuousIIDModel extends IIDModelObject[Double] {
   def apply(distribution: NormalDistribution) = 
     new ContinuousIIDModel(distribution)
     
