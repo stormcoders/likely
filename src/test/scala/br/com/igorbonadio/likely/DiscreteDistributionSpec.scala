@@ -8,7 +8,10 @@ class DiscreteDistributionSpec extends FlatSpec with ShouldMatchers {
 
   trait Casino {
     val alphabet = Alphabet("Loaded", "Fair")
-    val distribution = DiscreteDistribution(Probability(0.8), Probability(0.2))
+    val distribution = DiscreteDistribution(alphabet) { Prob =>
+      Prob("Loaded") is 0.8
+      Prob("Fair") is 0.2
+    }
   }
   
   it should "get the probability of a given symbol" in new Casino {
