@@ -10,18 +10,22 @@ class HiddenMarkovModelSpec extends FlatSpec with ShouldMatchers {
     val states = Alphabet("Loaded", "Fair")
     val symbols = Alphabet(1 to 6)
     val emissions = Map(
-      states.id("Loaded") -> DiscreteDistribution(Probability(0.5), 
-                                                  Probability(0.1), 
-                                                  Probability(0.1), 
-                                                  Probability(0.1), 
-                                                  Probability(0.1), 
-                                                  Probability(0.1)),
-      states.id("Fair") ->   DiscreteDistribution(Probability(1.0/6), 
-                                                  Probability(1.0/6), 
-                                                  Probability(1.0/6), 
-                                                  Probability(1.0/6), 
-                                                  Probability(1.0/6), 
-                                                  Probability(1.0/6))
+      states.id("Loaded") -> DiscreteDistribution(symbols) { Prob =>
+                              Prob("1") is 0.5
+                              Prob("2") is 0.1
+                              Prob("3") is 0.1
+                              Prob("4") is 0.1
+                              Prob("5") is 0.1
+                              Prob("6") is 0.1
+                            },
+      states.id("Fair") ->   DiscreteDistribution(symbols) { Prob =>
+                              Prob("1") is 1.0/6
+                              Prob("2") is 1.0/6
+                              Prob("3") is 1.0/6
+                              Prob("4") is 1.0/6
+                              Prob("5") is 1.0/6
+                              Prob("6") is 1.0/6
+                            }
     )
     val transitions = Map(
       states.id("Loaded") -> DiscreteDistribution(Probability(0.05), Probability(0.95)),
