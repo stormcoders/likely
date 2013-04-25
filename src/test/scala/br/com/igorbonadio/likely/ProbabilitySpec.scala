@@ -3,7 +3,7 @@ package br.com.igorbonadio.likely
 import org.scalatest._
 import org.scalatest.matchers._
 
-import PercentageImplicits._
+import Fancy._
 
 class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   behavior of "A probability"
