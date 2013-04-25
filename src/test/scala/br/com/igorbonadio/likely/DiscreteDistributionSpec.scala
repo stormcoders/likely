@@ -9,15 +9,15 @@ class DiscreteDistributionSpec extends FlatSpec with ShouldMatchers {
   trait Casino {
     val alphabet = Alphabet("Loaded", "Fair")
     val distribution = DiscreteDistribution(alphabet) { Prob =>
-      Prob("Loaded") is 0.8
-      Prob("Fair") is 0.2
+      Prob("Loaded") is Probability(0.8)
+      Prob("Fair") is Probability(0.2)
     }
   }
 
   it should "break when I forget to define probabilities" in {
     val alphabet = Alphabet("Loaded", "Fair")
     val distribution = DiscreteDistribution(alphabet) { Prob =>
-      Prob("Loaded") is 0.8
+      Prob("Loaded") is Probability(0.8)
     }
     distribution.prob(alphabet.id("Loaded")).expValue should be (0.8 plusOrMinus 0.0001)
     evaluating { distribution.prob(alphabet.id("Fair")).expValue } should produce [NullPointerException]

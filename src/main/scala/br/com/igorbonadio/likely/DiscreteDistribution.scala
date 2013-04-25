@@ -38,7 +38,7 @@ object DiscreteDistribution extends DistributionObject[Int] {
     def distribution = {
       var dist: Array[LogProbability] = new Array[LogProbability](alphabet.size)
       probs.foreach { p =>
-        dist(alphabet.id(p.name)) = Probability(p.value)
+        dist(alphabet.id(p.name)) = p.value
       }
       new DiscreteDistribution(dist.toList)
     }
@@ -49,9 +49,9 @@ object DiscreteDistribution extends DistributionObject[Int] {
   }
 
   private class ProbabilityValueOf(symbol: String) {
-    var value = 0.0
+    var value:LogProbability = Probability(0.0)
     def name = symbol
-    def is(v: Double) = {
+    def is(v: LogProbability) = {
       value = v
     }
   }
