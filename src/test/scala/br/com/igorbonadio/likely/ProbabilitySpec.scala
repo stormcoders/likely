@@ -3,6 +3,8 @@ package br.com.igorbonadio.likely
 import org.scalatest._
 import org.scalatest.matchers._
 
+import PercentageImplicits._
+
 class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   behavior of "A probability"
   
@@ -16,6 +18,10 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
     (1 to 10).map {i => i/10.0}.foreach { p => 
       Probability(p).expValue should be (p plusOrMinus 0.0001)
     }
+  }
+
+  it should "have a fancy way to be defined" in {
+    50.0.%%.expValue should be (0.5 plusOrMinus 0.0001)
   }
   
   it should "multiply probabilities" in {
@@ -74,5 +80,4 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
     (Probability(0.5) <= Probability(0.5)) should be === true
     (Probability(0.5) <= Probability(0.4)) should be === false
   }
-
 }
