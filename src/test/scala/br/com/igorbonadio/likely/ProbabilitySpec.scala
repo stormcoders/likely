@@ -55,29 +55,29 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   }
 
   it should "check if a probability is equal to other" in {
-    (Probability(0.5) == Probability(0.5)) should be === true
-    (Probability(0.5) == Probability(0.4)) should be === false
+    (50.0.%% == 50.0.%%) should be === true
+    (50.0.%% == 40.0.%%) should be === false
   }
 
   it should "check if a probability is greater than other" in {
-    (Probability(0.5) > Probability(0.5)) should be === false
-    (Probability(0.5) > Probability(0.4)) should be === true
+    (50.0.%% > 50.0.%%) should be === false
+    (50.0.%% > 40.0.%%) should be === true
   }
 
   it should "check if a probability is greater than or equal to other" in {
-    (Probability(0.5) >= Probability(0.6)) should be === false
-    (Probability(0.5) >= Probability(0.5)) should be === true
-    (Probability(0.5) >= Probability(0.4)) should be === true
+    (50.0.%% >= 60.0.%%) should be === false
+    (50.0.%% >= 50.0.%%) should be === true
+    (50.0.%% >= 40.0.%%) should be === true
   }
 
   it should "check if a probability is less than other" in {
-    (Probability(0.5) < Probability(0.6)) should be === true
-    (Probability(0.5) < Probability(0.4)) should be === false
+    (50.0.%% < 60.0.%%) should be === true
+    (50.0.%% < 40.0.%%) should be === false
   }
 
   it should "check if a probability is less than or equal to other" in {
-    (Probability(0.5) <= Probability(0.6)) should be === true
-    (Probability(0.5) <= Probability(0.5)) should be === true
-    (Probability(0.5) <= Probability(0.4)) should be === false
+    (50.0.%% <= 60.0.%%) should be === true
+    (50.0.%% <= 50.0.%%) should be === true
+    (50.0.%% <= 40.0.%%) should be === false
   }
 }
