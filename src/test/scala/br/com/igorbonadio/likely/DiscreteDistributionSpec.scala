@@ -3,21 +3,23 @@ package br.com.igorbonadio.likely
 import org.scalatest._
 import org.scalatest.matchers._
 
+import Fancy._
+
 class DiscreteDistributionSpec extends FlatSpec with ShouldMatchers {
   behavior of "A discrete distribution"
 
   trait Casino {
     val alphabet = Alphabet("Loaded", "Fair")
     val distribution = DiscreteDistribution(alphabet) { Prob =>
-      Prob("Loaded") is Probability(0.8)
-      Prob("Fair") is Probability(0.2)
+      Prob("Loaded") is 80.0.%%
+      Prob("Fair") is 20.0.%%
     }
   }
 
   it should "break when I forget to define probabilities" in {
     val alphabet = Alphabet("Loaded", "Fair")
     val distribution = DiscreteDistribution(alphabet) { Prob =>
-      Prob("Loaded") is Probability(0.8)
+      Prob("Loaded") is 80.0.%%
     }
     distribution.prob(alphabet.id("Loaded")).expValue should be (0.8 plusOrMinus 0.0001)
     evaluating { distribution.prob(alphabet.id("Fair")).expValue } should produce [NullPointerException]
