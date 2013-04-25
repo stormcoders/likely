@@ -3,6 +3,8 @@ package br.com.igorbonadio.likely
 import org.scalatest._
 import org.scalatest.matchers._
 
+import Fancy._
+
 class BayesianClassifierSpec extends FlatSpec with ShouldMatchers {
   behavior of "A Bayesian Classifier"
 
@@ -10,8 +12,8 @@ class BayesianClassifierSpec extends FlatSpec with ShouldMatchers {
     val alphabet = Alphabet("Loaded", "Fair")
     
     val classifier = BayesianClassifier(
-      "model1" -> DiscreteIIDModel(Probability(0.8), Probability(0.2)),
-      "model2" -> DiscreteIIDModel(Probability(0.2), Probability(0.8))
+      "model1" -> DiscreteIIDModel(80.0.%%, 20.0.%%),
+      "model2" -> DiscreteIIDModel(20.0.%%, 80.0.%%)
     )
 
     classifier.classify(alphabet.generateSequeceOfIds(Stream("Fair", "Loaded", "Fair")))._1 should be === "model2"
