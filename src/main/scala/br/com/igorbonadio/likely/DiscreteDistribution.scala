@@ -3,6 +3,8 @@ package br.com.igorbonadio.likely
 import util.Random
 import scala.collection.mutable.ListBuffer
 
+import Fancy._
+
 class DiscreteDistribution(probabilities: List[LogProbability]) extends Distribution[Int] {
   val probabilityMap = ((0 to (probabilities.length - 1)) zip probabilities).toMap
   
@@ -49,7 +51,7 @@ object DiscreteDistribution extends DistributionObject[Int] {
   }
 
   private class ProbabilityValueOf(symbol: String) {
-    var value:LogProbability = Probability(0.0)
+    var value:LogProbability = 0.0.%%
     def name = symbol
     def is(v: LogProbability) = {
       value = v

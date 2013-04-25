@@ -2,10 +2,12 @@ package br.com.igorbonadio.likely
 
 import util.Random
 
+import Fancy._
+
 abstract class IIDModel[T](distribution: Distribution[T]) {
   def prob(sequence: Stream[T]): LogProbability = sequence match {
     case x #:: xs => distribution.prob(x) * prob(xs)
-    case Stream() => Probability(1)
+    case Stream() => 100.0.%%
   }
 
   def choose: Stream[T] = distribution.choose #:: choose
