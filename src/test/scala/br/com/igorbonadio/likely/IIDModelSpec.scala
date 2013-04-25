@@ -3,12 +3,14 @@ package br.com.igorbonadio.likely
 import org.scalatest._
 import org.scalatest.matchers._
 
+import Fancy._
+
 class DiscreteIIDModelSpec extends FlatSpec with ShouldMatchers {
   behavior of "A Discrete IID Model"
 
   trait IIDCasino {
     val alphabet = Alphabet("Loaded", "Fair")
-    val model = DiscreteIIDModel(Probability(0.8), Probability(0.2))
+    val model = DiscreteIIDModel(80.0.%%, 20.0.%%)
   }
 
   it should "get the probability of a given stream" in new IIDCasino {
