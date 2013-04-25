@@ -32,27 +32,27 @@ object DiscreteDistribution extends DistributionObject[Int] {
     new DiscreteDistribution(
       sequence.groupBy(x => x).toSeq.sortBy(_._1).map { case (k, v) => 
         Probability(v.length.toDouble/sequence.length) }.toList)
-}
 
-class ProbabilityOf(alphabet: Alphabet) {
-  var probs: ListBuffer[ProbabilityValueOf] = new ListBuffer()
-  def distribution = {
-    var dist: Array[LogProbability] = new Array[LogProbability](alphabet.size)
-    probs.foreach { p =>
-      dist(alphabet.id(p.name)) = Probability(p.value)
+  private class ProbabilityOf(alphabet: Alphabet) {
+    var probs: ListBuffer[ProbabilityValueOf] = new ListBuffer()
+    def distribution = {
+      var dist: Array[LogProbability] = new Array[LogProbability](alphabet.size)
+      probs.foreach { p =>
+        dist(alphabet.id(p.name)) = Probability(p.value)
+      }
+      new DiscreteDistribution(dist.toList)
     }
-    new DiscreteDistribution(dist.toList)
+    def apply(symbol: String) = {
+      probs.prepend(new ProbabilityValueOf(symbol))
+      probs.head
+    }
   }
-  def apply(symbol: String) = {
-    probs.prepend(new ProbabilityValueOf(symbol))
-    probs.head
-  }
-}
 
-class ProbabilityValueOf(symbol: String) {
-  var value = 0.0
-  def name = symbol
-  def is(v: Double) = {
-    value = v
+  private class ProbabilityValueOf(symbol: String) {
+    var value = 0.0
+    def name = symbol
+    def is(v: Double) = {
+      value = v
+    }
   }
 }
