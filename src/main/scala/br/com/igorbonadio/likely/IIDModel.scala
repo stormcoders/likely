@@ -24,6 +24,12 @@ object DiscreteIIDModel extends IIDModelObject[Int] {
   def apply(probabilities: LogProbability*) =
     new DiscreteIIDModel(new DiscreteDistribution(probabilities.toList))
 
+  def apply(alphabet: Alphabet)(definition: (ProbabilityOf => Unit)): DiscreteIIDModel = {
+    var probs = new ProbabilityOf(alphabet)
+    definition(probs)
+    new DiscreteIIDModel(probs.distribution)
+  }
+
   def train(sequence: Stream[Int]): DiscreteIIDModel = 
     new DiscreteIIDModel(DiscreteDistribution.train(sequence))
 }

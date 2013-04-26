@@ -10,7 +10,10 @@ class DiscreteIIDModelSpec extends FlatSpec with ShouldMatchers {
 
   trait IIDCasino {
     val alphabet = Alphabet("Loaded", "Fair")
-    val model = DiscreteIIDModel(80.0.%%, 20.0.%%)
+    val model = DiscreteIIDModel(alphabet) { Prob =>
+      Prob("Loaded") is 80.0.%%
+      Prob("Fair") is 20.0.%%
+    }
   }
 
   it should "get the probability of a given stream" in new IIDCasino {

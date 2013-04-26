@@ -1,7 +1,6 @@
 package br.com.igorbonadio.likely
 
 import util.Random
-import scala.collection.mutable.ListBuffer
 
 import Fancy._
 
@@ -34,27 +33,4 @@ object DiscreteDistribution extends DistributionObject[Int] {
     new DiscreteDistribution(
       sequence.groupBy(x => x).toSeq.sortBy(_._1).map { case (k, v) => 
         Probability(v.length.toDouble/sequence.length) }.toList)
-
-  private class ProbabilityOf(alphabet: Alphabet) {
-    var probs: ListBuffer[ProbabilityValueOf] = new ListBuffer()
-    def distribution = {
-      var dist: Array[LogProbability] = new Array[LogProbability](alphabet.size)
-      probs.foreach { p =>
-        dist(alphabet.id(p.name)) = p.value
-      }
-      new DiscreteDistribution(dist.toList)
-    }
-    def apply(symbol: String) = {
-      probs.prepend(new ProbabilityValueOf(symbol))
-      probs.head
-    }
-  }
-
-  private class ProbabilityValueOf(symbol: String) {
-    var value:LogProbability = 0.0.%%
-    def name = symbol
-    def is(v: LogProbability) = {
-      value = v
-    }
-  }
 }
