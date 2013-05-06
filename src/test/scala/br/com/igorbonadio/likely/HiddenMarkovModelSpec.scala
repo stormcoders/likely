@@ -13,24 +13,24 @@ class HiddenMarkovModelSpec extends FlatSpec with ShouldMatchers {
     val symbols = Alphabet(1 to 6)
     val hmm = new HiddenMarkovModel(
       ConditionalProbabilities(symbols, states) { Prob =>
-        Prob("1", "Loaded") is 50.0.%%
-        Prob("2", "Loaded") is 10.0.%%
-        Prob("3", "Loaded") is 10.0.%%
-        Prob("4", "Loaded") is 10.0.%%
-        Prob("5", "Loaded") is 10.0.%%
-        Prob("6", "Loaded") is 10.0.%%
-        Prob("1", "Fair") is 16.66.%%
-        Prob("2", "Fair") is 16.66.%%
-        Prob("3", "Fair") is 16.66.%%
-        Prob("4", "Fair") is 16.66.%%
-        Prob("5", "Fair") is 16.66.%%
-        Prob("6", "Fair") is 16.66.%%
+        Prob("1" | "Loaded") is 50.0.%%
+        Prob("2" | "Loaded") is 10.0.%%
+        Prob("3" | "Loaded") is 10.0.%%
+        Prob("4" | "Loaded") is 10.0.%%
+        Prob("5" | "Loaded") is 10.0.%%
+        Prob("6" | "Loaded") is 10.0.%%
+        Prob("1" | "Fair") is 16.66.%%
+        Prob("2" | "Fair") is 16.66.%%
+        Prob("3" | "Fair") is 16.66.%%
+        Prob("4" | "Fair") is 16.66.%%
+        Prob("5" | "Fair") is 16.66.%%
+        Prob("6" | "Fair") is 16.66.%%
       }, 
       ConditionalProbabilities(states, states) { Prob =>
-        Prob("Loaded", "Loaded") is 5.0.%%
-        Prob("Fair"  , "Loaded") is 95.0.%%
-        Prob("Loaded", "Fair") is 10.0.%%
-        Prob("Fair"  , "Fair") is 90.0.%%
+        Prob("Loaded" | "Loaded") is 5.0.%%
+        Prob("Fair"   | "Loaded") is 95.0.%%
+        Prob("Loaded" | "Fair") is 10.0.%%
+        Prob("Fair"   | "Fair") is 90.0.%%
       })
     val x = symbols.generateSequeceOfIds(Stream("1", "2"))
     val y = states.generateSequeceOfIds(Stream("Fair", "Loaded"))

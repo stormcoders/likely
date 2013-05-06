@@ -7,6 +7,7 @@ import Fancy._
 
 object Fancy {
   implicit def DoubleToPercentage(value: Double) = new Percentage(value)
+  implicit def StringToConditionalProbabilityParam(value: String) = new ConditionalProbabilityParam(value)
 
   class Percentage(value: Double) {
     def %% = Probability(value/100)
@@ -47,8 +48,8 @@ object ConditionalProbabilities {
 class ConditionalProbabilityOf(alphabet1: Alphabet, alphabet2: Alphabet) {
   var probs: ListBuffer[ConditionalProbabilityValueOf] = new ListBuffer()
 
-  def apply(symbol1: String, symbol2: String) = {
-    probs.prepend(new ConditionalProbabilityValueOf(symbol1, symbol2))
+  def apply(params: ConditionalProbabilityParams) = {
+    probs.prepend(new ConditionalProbabilityValueOf(params.symbol1, params.symbol2))
     probs.head
   }
 
@@ -66,6 +67,8 @@ class ConditionalProbabilityOf(alphabet1: Alphabet, alphabet2: Alphabet) {
   }
 }
 
+case class ConditionalProbabilityParams(symbol1: String, symbol2: String)
+
 class ConditionalProbabilityValueOf(s1: String, s2: String) {
   var value:LogProbability = 0.0.%%
   def symbol1 = s1
@@ -73,4 +76,8 @@ class ConditionalProbabilityValueOf(s1: String, s2: String) {
   def is(v: LogProbability) = {
     value = v
   }
+}
+
+class ConditionalProbabilityParam(symbol1: String) {
+  def |(symbol2: String) = new ConditionalProbabilityParams(symbol1, symbol2)
 }
