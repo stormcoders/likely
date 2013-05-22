@@ -18,19 +18,19 @@ object HiddenMarkovModel {
     definition(hmmDefinition)
     hmmDefinition.hmm
   }
-}
 
-class HiddenMarkovModelDefinition(symbols: Alphabet, states: Alphabet) {
-  var emissionsMap: Map[Int, DiscreteDistribution] = null
-  var transitionsMap: Map[Int, DiscreteDistribution] = null
+  class HiddenMarkovModelDefinition(symbols: Alphabet, states: Alphabet) {
+    var emissionsMap: Map[Int, DiscreteDistribution] = null
+    var transitionsMap: Map[Int, DiscreteDistribution] = null
 
-  def transitions(definition: (ConditionalProbabilityOf => Unit)) = {
-    emissionsMap = ConditionalProbabilities(symbols, states)(definition)
+    def transitions(definition: (ConditionalProbabilityOf => Unit)) = {
+      emissionsMap = ConditionalProbabilities(symbols, states)(definition)
+    }
+
+    def emissions(definition: (ConditionalProbabilityOf => Unit)) = {
+      transitionsMap = ConditionalProbabilities(states, states)(definition)
+    }
+
+    def hmm = new HiddenMarkovModel(emissionsMap, transitionsMap)
   }
-
-  def emissions(definition: (ConditionalProbabilityOf => Unit)) = {
-    transitionsMap = ConditionalProbabilities(states, states)(definition)
-  }
-
-  def hmm = new HiddenMarkovModel(emissionsMap, transitionsMap)
 }
