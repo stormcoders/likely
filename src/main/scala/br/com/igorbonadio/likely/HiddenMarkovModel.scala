@@ -11,3 +11,26 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
     prob2(x zip y, 0)
   }
 }
+
+object HiddenMarkovModel {
+  def apply(symbols: Alphabet, states: Alphabet)(definition: (HiddenMarkovModelDefinition => Unit) ) = {
+    val hmmDefinition = new HiddenMarkovModelDefinition(symbols, states)
+    definition(hmmDefinition)
+    hmmDefinition.hmm
+  }
+}
+
+class HiddenMarkovModelDefinition(symbols: Alphabet, states: Alphabet) {
+  var emissionsMap: Map[Int, DiscreteDistribution] = null
+  var transitionsMap: Map[Int, DiscreteDistribution] = null
+
+  def transitions(definition: (ConditionalProbabilityOf => Unit)) = {
+    emissionsMap = ConditionalProbabilities(symbols, states)(definition)
+  }
+
+  def emissions(definition: (ConditionalProbabilityOf => Unit)) = {
+    transitionsMap = ConditionalProbabilities(states, states)(definition)
+  }
+
+  def hmm = new HiddenMarkovModel(emissionsMap, transitionsMap)
+}
