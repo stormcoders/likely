@@ -32,9 +32,13 @@ class HiddenMarkovModelSpec extends FlatSpec with ShouldMatchers {
         Prob("Loaded" | "Fair") is 10.0.%%
         Prob("Fair"   | "Fair") is 90.0.%%
       }
+      HMM.initialProbabilities { Prob =>
+        Prob("Loaded") is 50.0.%%
+        Prob("Fair") is 50.0.%%
+      }
     }
     val x = symbols.generateSequeceOfIds(Stream("1", "2"))
     val y = states.generateSequeceOfIds(Stream("Fair", "Loaded"))
-    hmm.prob(x, y).expValue should be ((0.95*(1.0/6)*0.1*0.1) plusOrMinus 0.0001)
+    hmm.prob(x, y).expValue should be ((0.5*(1.0/6)*0.1*0.1) plusOrMinus 0.0001)
   }
 }
