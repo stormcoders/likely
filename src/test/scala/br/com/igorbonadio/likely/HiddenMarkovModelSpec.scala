@@ -8,7 +8,7 @@ import Fancy._
 class HiddenMarkovModelSpec extends FlatSpec with ShouldMatchers {
   behavior of "A HMM"
 
-  it should "evaluate the joint probability of a sequence of labels and a sequence of simbols" in {
+  trait HMMCasino {
     val states = Alphabet("Loaded", "Fair")
     val symbols = Alphabet(1 to 6)
     val hmm = HiddenMarkovModel(symbols, states) { HMM =>
@@ -37,6 +37,9 @@ class HiddenMarkovModelSpec extends FlatSpec with ShouldMatchers {
         Prob("Fair") is 50.0.%%
       }
     }
+  }
+
+  it should "evaluate the joint probability of a sequence of labels and a sequence of simbols" in new HMMCasino {
     val x = symbols.generateSequeceOfIds(Stream("1", "2"))
     val y = states.generateSequeceOfIds(Stream("Fair", "Loaded"))
     hmm.prob(x, y).expValue should be ((0.5*(1.0/6)*0.1*0.1) plusOrMinus 0.0001)
