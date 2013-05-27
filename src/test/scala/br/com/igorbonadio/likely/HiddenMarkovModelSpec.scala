@@ -44,4 +44,10 @@ class HiddenMarkovModelSpec extends FlatSpec with ShouldMatchers {
     val y = states.generateSequeceOfIds(Stream("Fair", "Loaded"))
     hmm.prob(x, y).expValue should be ((0.5*(1.0/6)*0.1*0.1) plusOrMinus 0.0001)
   }
+
+  it should "find the viterbi path" in new HMMCasino {
+    val x = symbols.generateSequeceOfIds(Stream("1", "2", "3", "4", "5"))
+    val (value, path) = hmm.viterbi(x)
+    hmm.prob(x, path.toStream).expValue should be (value.expValue plusOrMinus 0.0001)
+  }
 }
