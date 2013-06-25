@@ -1,4 +1,4 @@
-package br.com.igorbonadio.likely
+package br.com.stormcoders.likely
 
 class BayesianClassifier[T](models: Map[String, IIDModel[T]]) {
   def classify(sequence: Stream[T]) = {

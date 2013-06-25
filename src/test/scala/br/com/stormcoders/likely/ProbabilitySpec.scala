@@ -1,4 +1,4 @@
-package br.com.igorbonadio.likely
+package br.com.stormcoders.likely
 
 import org.scalatest._
 import org.scalatest.matchers._
