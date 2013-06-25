@@ -1,4 +1,4 @@
-package br.com.igorbonadio.likely
+package br.com.stormcoders.likely
 
 trait Distribution[T] {
   def prob(x: T): LogProbability
