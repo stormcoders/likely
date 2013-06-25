@@ -1,4 +1,4 @@
-package br.com.igorbonadio.likely.examples.language_classifier
+package br.com.stormcoders.likely.examples.language_classifier
 
 import org.scalatest._
 import org.scalatest.matchers._

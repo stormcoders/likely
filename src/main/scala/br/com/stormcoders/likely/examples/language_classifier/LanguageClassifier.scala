@@ -1,8 +1,8 @@
-package br.com.igorbonadio.likely.examples.language_classifier
+package br.com.stormcoders.likely.examples.language_classifier
 
 import scala.io.Source
 
-import br.com.igorbonadio.likely._
+import br.com.stormcoders.likely._
 
 class LanguageClassifier {
   val alphabet = Alphabet('A' to 'Z')
@@ -19,7 +19,7 @@ class LanguageClassifier {
     classifier.classify(alphabet.generateSequeceOfIds(justLetters(text)))
 
   private def full_path(filename: String) =
-    "src/main/scala/br/com/igorbonadio/likely/examples/language_classifier/" + filename
+    "src/main/scala/br/com/stormcoders/likely/examples/language_classifier/" + filename
 
   private def fileToString(filename: String) =
     Source.fromFile(filename).mkString
