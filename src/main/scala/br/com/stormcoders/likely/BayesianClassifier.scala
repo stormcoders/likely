@@ -13,4 +13,6 @@ class BayesianClassifier[T](prior: Map[String, LogProbability], models: Map[Stri
 object BayesianClassifier {
   def apply[T](prior: (String, LogProbability)*)(models: (String, IIDModel[T])*) = 
     new BayesianClassifier(prior.toMap, models.toMap)
+  def apply[T](models: (String, IIDModel[T])*) =
+    new BayesianClassifier(models.map{m => (m._1, Probability(100/models.length))}.toMap, models.toMap)
 }
