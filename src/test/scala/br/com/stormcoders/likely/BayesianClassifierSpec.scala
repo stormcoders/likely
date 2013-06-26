@@ -12,6 +12,9 @@ class BayesianClassifierSpec extends FlatSpec with ShouldMatchers {
     val alphabet = Alphabet("Loaded", "Fair")
     
     val classifier = BayesianClassifier(
+      "model1" -> 50.0.%%,
+      "model2" -> 50.0.%%
+    )(
       "model1" -> DiscreteIIDModel(80.0.%%, 20.0.%%),
       "model2" -> DiscreteIIDModel(20.0.%%, 80.0.%%)
     )
