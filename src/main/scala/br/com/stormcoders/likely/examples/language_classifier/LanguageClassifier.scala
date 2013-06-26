@@ -3,10 +3,14 @@ package br.com.stormcoders.likely.examples.language_classifier
 import scala.io.Source
 
 import br.com.stormcoders.likely._
+import Fancy._
 
 class LanguageClassifier {
   val alphabet = Alphabet('A' to 'Z')
   val classifier = BayesianClassifier(
+    "portuguese" -> 50.0.%%,
+    "english"    -> 50.0.%%
+  )(
     "portuguese" -> DiscreteIIDModel.train(
       alphabet.generateSequeceOfIds(
         justLetters(fileToString(full_path("pt.txt"))))),
