@@ -77,6 +77,32 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
 
     (sum, alpha)
   }
+
+  def backward(x: Stream[Int]) = {
+    var beta = Array.ofDim[LogProbability](states.size, x.size)
+
+    for (k <- 0 until states.size) {
+      beta(k)(x.size - 1) = 100.0.%%;
+    }
+
+    var xs = x.reverse
+    for (i <- (x.size - 2) to 0 by -1) {
+      for (k <- 0 until states.size) {
+        beta(k)(i) = transitions(k).prob(0) * emissions(0).prob(xs.head) * beta(0)(i+1)
+        for (p <- 1 until states.size) {
+          beta(k)(i) = beta(k)(i) + (transitions(k).prob(p) * emissions(p).prob(xs.head) * beta(p)(i+1))
+        }
+      }
+      xs = xs.tail
+    }
+
+    var sum = 0.0.%%
+    for (k <- 0 until states.size) {
+      sum = (beta(k)(0) * initialProbabilities.prob(Stream(k)) * emissions(k).prob(x.head)) + sum
+    }
+
+    (sum, beta)
+  }
 }
 
 object HiddenMarkovModel {
