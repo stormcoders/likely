@@ -98,7 +98,7 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
 
     var sum = 0.0.%%
     for (k <- 0 until states.size) {
-      sum = (beta(k)(0) * initialProbabilities.prob(Stream(k)) * emissions(k).prob(x.head)) + sum
+      sum = sum + (beta(k)(0) * initialProbabilities.prob(Stream(k)) * emissions(k).prob(x.head))
     }
 
     (sum, beta)

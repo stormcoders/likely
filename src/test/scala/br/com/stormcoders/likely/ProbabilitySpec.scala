@@ -37,7 +37,7 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
   }
   
   it should "add probabilities" in {
-    (for (x <- 1 to 10; y <- 1 to 10 if x + y <= 10) yield Pair(x/10.0, y/10.0)).foreach { p => p match {
+    (for (x <- 0 to 10; y <- 0 to 10 if x + y <= 10) yield Pair(x/10.0, y/10.0)).foreach { p => p match {
       case Pair(x, y) => (Probability(x) + Probability(y)).logValue should be (Probability(x+y).logValue plusOrMinus 0.0001)
     }}
   }

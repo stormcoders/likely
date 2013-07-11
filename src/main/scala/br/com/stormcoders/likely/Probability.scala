@@ -10,8 +10,13 @@ class LogProbability(v: Double) {
   def /(p: LogProbability):LogProbability =
     new LogProbability(logValue - p.logValue)
     
-  def +(p: LogProbability):LogProbability =
-    new LogProbability(logValue - math.log(1 + math.exp(logValue - p.logValue)))
+  def +(p: LogProbability):LogProbability = 
+    if (this > p)
+      new LogProbability(logValue - math.log(1 + math.exp(logValue - p.logValue)))
+    else if (this < p)
+      p + this
+    else // this == p
+      new LogProbability(logValue - math.log(2))
     
   def -(p: LogProbability):LogProbability =
     new LogProbability(logValue - math.log(1 - math.exp(logValue - p.logValue)))
