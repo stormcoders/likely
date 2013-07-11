@@ -59,7 +59,14 @@ class HiddenMarkovModelSpec extends FlatSpec with ShouldMatchers {
 
   it should "calculate the backward algorithm" in new HMMCasino {
     val x = symbols.generateSequeceOfIds(Stream("1", "2", "3", "4", "5"))
-    val (value, alpha) = hmm.backward(x)
+    val (value, beta) = hmm.backward(x)
     value.logValue should be (8.4117 plusOrMinus 0.0001)
+  }
+
+  it should "calculate p(x) == forward == backward" in new HMMCasino {
+    val x = symbols.generateSequeceOfIds(Stream("1", "2", "3", "4", "5", "1", "2", "3", "4", "5"))
+    val (forward, alpha) = hmm.forward(x)
+    val (backward, beta) = hmm.backward(x)
+    forward.logValue should be (backward.logValue plusOrMinus 0.0001)
   }
 }
