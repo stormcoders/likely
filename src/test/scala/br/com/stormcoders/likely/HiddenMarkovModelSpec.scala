@@ -49,6 +49,7 @@ class HiddenMarkovModelSpec extends FlatSpec with ShouldMatchers {
     val x = symbols.generateSequeceOfIds(Stream("1", "2", "3", "4", "5"))
     val (value, path) = hmm.viterbi(x)
     hmm.prob(x, path.toStream).expValue should be (value.expValue plusOrMinus 0.0001)
+    path should be === List(0, 1, 1, 1, 1)
   }
 
   it should "calculate the forward algorithm" in new HMMCasino {

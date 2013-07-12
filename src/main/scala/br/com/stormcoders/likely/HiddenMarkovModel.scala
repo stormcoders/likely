@@ -22,15 +22,13 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
     var xs = x.tail
     for (i <- 0 until (x.size - 1)) {
       for (k <- 0 until states.size) {
-        gamma(k)(i+1) = gamma(0)(i) * transitions(0).prob(k)
-        for (p <- 1 until states.size) {
-          val v = gamma(p)(i) * transitions(p).prob(k)
-          if (gamma(k)(i+1) < v) {
-            gamma(k)(i+1) = v
-            psi(k)(i+1) = p;
-          }
-        }
-        gamma(k)(i+1) *= emissions(k).prob(xs.head)
+
+        val (m, index) = (0 until states.size).map { p =>
+          (gamma(p)(i) * transitions(p).prob(k), p)
+        }.minBy(_._1.logValue)
+
+        psi(k)(i+1) = index
+        gamma(k)(i+1) = m * emissions(k).prob(xs.head)
       }
       xs = xs.tail
     }
