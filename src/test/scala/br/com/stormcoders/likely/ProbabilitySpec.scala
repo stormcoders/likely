@@ -80,4 +80,11 @@ class ProbabilitySpec extends FlatSpec with ShouldMatchers {
     (50.0.%% <= 50.0.%%) should be === true
     (50.0.%% <= 40.0.%%) should be === false
   }
+
+  it should "be sortable" in {
+    val p = List(50.0.%%, 30.0.%%, 45.55.%%)
+    val pSorted = p.sorted
+    (pSorted(0) < pSorted(1)) should be === true
+    (pSorted(1) < pSorted(2)) should be === true
+  }
 }

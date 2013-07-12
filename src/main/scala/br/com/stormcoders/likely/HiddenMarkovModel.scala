@@ -25,7 +25,7 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
 
         val (m, index) = (0 until states.size).map { p =>
           (gamma(p)(i) * transitions(p).prob(k), p)
-        }.minBy(_._1.logValue)
+        }.max
 
         psi(k)(i+1) = index
         gamma(k)(i+1) = m * emissions(k).prob(xs.head)

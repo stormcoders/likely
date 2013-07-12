@@ -1,6 +1,6 @@
 package br.com.stormcoders.likely
 
-class LogProbability(v: Double) {
+class LogProbability(v: Double) extends Ordered[LogProbability] {
   val logValue = v
   def expValue = math.exp(-logValue)
   
@@ -24,17 +24,21 @@ class LogProbability(v: Double) {
   def ==(p: LogProbability): Boolean =
     logValue == p.logValue
 
-  def >(p: LogProbability): Boolean =
+  override def >(p: LogProbability): Boolean =
     logValue < p.logValue
 
-  def >=(p: LogProbability): Boolean =
+  override def >=(p: LogProbability): Boolean =
     logValue <= p.logValue
 
-  def <(p: LogProbability): Boolean =
+  override def <(p: LogProbability): Boolean =
     logValue > p.logValue
 
-  def <=(p: LogProbability): Boolean =
+  override def <=(p: LogProbability): Boolean =
     logValue >= p.logValue
+
+  override def compare(p: LogProbability): Int =
+    if (this > p) 1
+    else -1
     
   override def toString:String = expValue.toString
 }
