@@ -63,16 +63,16 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
       for (k <- 0 until states.size) {
         alpha(k)(i+1) = alpha(0)(i) * transitions(0).prob(k)
         for (p <- 1 until states.size) {
-          alpha(k)(i+1) = alpha(k)(i+1) + (alpha(p)(i) * transitions(p).prob(k))
+          alpha(k)(i+1) += alpha(p)(i) * transitions(p).prob(k)
         }
-        alpha(k)(i+1) = alpha(k)(i+1) * emissions(k).prob(xs.head)
+        alpha(k)(i+1) *= emissions(k).prob(xs.head)
       }
       xs = xs.tail
     }
 
     var sum = alpha(0)(x.size - 1)
     for (k <- 1 until states.size) {
-      sum = sum + alpha(k)(x.size - 1)
+      sum += alpha(k)(x.size - 1)
     }
 
     (sum, alpha)
@@ -90,7 +90,7 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
       for (k <- 0 until states.size) {
         beta(k)(i) = transitions(k).prob(0) * emissions(0).prob(xs.head) * beta(0)(i+1)
         for (p <- 1 until states.size) {
-          beta(k)(i) = beta(k)(i) + (transitions(k).prob(p) * emissions(p).prob(xs.head) * beta(p)(i+1))
+          beta(k)(i) += transitions(k).prob(p) * emissions(p).prob(xs.head) * beta(p)(i+1)
         }
       }
       xs = xs.tail
@@ -98,7 +98,7 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
 
     var sum = 0.0.%%
     for (k <- 0 until states.size) {
-      sum = sum + (beta(k)(0) * initialProbabilities.prob(Stream(k)) * emissions(k).prob(x.head))
+      sum += beta(k)(0) * initialProbabilities.prob(Stream(k)) * emissions(k).prob(x.head)
     }
 
     (sum, beta)
