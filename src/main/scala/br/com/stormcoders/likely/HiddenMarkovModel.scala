@@ -18,20 +18,26 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
       }
     }
 
+    def _max(start: Int, end: Int)(func: (Int => LogProbability)) = {
+      (start until end).map { p =>
+        (func(p), p)
+      }.max
+    }
+
     def dynamicProgramming(gamma: Array[Array[LogProbability]], psi: Array[Array[Int]]) = {
-      var xs = x.tail
-      for (i <- 0 until (x.size - 1)) {
+      def _dynamicProgramming(range: Range, x: Stream[Int]): Unit = {
         for (k <- 0 until states.size) {
 
           val (m, index) = _max(0, states.size) { p =>
-            gamma(p)(i) * transitions(p).prob(k)
+            gamma(p)(range.head) * transitions(p).prob(k)
           }
 
-          psi(k)(i+1) = index
-          gamma(k)(i+1) = m * emissions(k).prob(xs.head)
+          psi(k)(range.head + 1) = index
+          gamma(k)(range.head + 1) = m * emissions(k).prob(x.head)
         }
-        xs = xs.tail
+        if (range.length > 1) _dynamicProgramming(range.tail, x.tail)
       }
+      _dynamicProgramming(0 until (x.size - 1), x)
     }
 
     def constructPath(gamma: Array[Array[LogProbability]], psi: Array[Array[Int]]) = {
@@ -110,12 +116,6 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
     }
 
     (sum, beta)
-  }
-
-  private def _max(start: Int, end: Int)(func: (Int => LogProbability)) = {
-    (start until end).map { p =>
-      (func(p), p)
-    }.max
   }
 }
 
