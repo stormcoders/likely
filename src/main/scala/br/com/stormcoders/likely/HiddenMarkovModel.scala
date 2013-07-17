@@ -12,12 +12,16 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
   }
 
   def viterbi(x: Stream[Int]) = {
+    def initialize(gamma: Array[Array[LogProbability]]) = {
+      for (k <- 0 until states.size) {
+        gamma(k)(0) = initialProbabilities.prob(Stream(k)) * emissions(k).prob(x.head)
+      }
+    }
+
     var gamma = Array.ofDim[LogProbability](states.size, x.size)
     var psi = Array.ofDim[Int](states.size, x.size)
 
-    for (k <- 0 until states.size) {
-      gamma(k)(0) = initialProbabilities.prob(Stream(k)) * emissions(k).prob(x.head)
-    }
+    initialize(gamma)
 
     var xs = x.tail
     for (i <- 0 until (x.size - 1)) {
