@@ -34,26 +34,29 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
       }
     }
 
+    def constructPath(gamma: Array[Array[LogProbability]], psi: Array[Array[Int]]) = {
+      var max = gamma(0)(x.size-1)
+      var path = new Array[Int](x.size)
+      path(x.size-1) = 0
+      for (k <- 1 until states.size) {
+        if (max < gamma(k)(x.size-1)) {
+          max = gamma(k)(x.size-1)
+          path(x.size-1) = k
+        }
+      }
+
+      for (i <- (x.size-1) to 1 by -1) {
+        path(i-1) = psi(path(i))(i)
+      }
+      (max, path.toList)
+    }
+
     var gamma = Array.ofDim[LogProbability](states.size, x.size)
     var psi = Array.ofDim[Int](states.size, x.size)
 
     initialize(gamma)
     dynamicProgramming(gamma, psi)
-
-    var max = gamma(0)(x.size-1)
-    var path = new Array[Int](x.size)
-    path(x.size-1) = 0
-    for (k <- 1 until states.size) {
-      if (max < gamma(k)(x.size-1)) {
-        max = gamma(k)(x.size-1)
-        path(x.size-1) = k
-      }
-    }
-
-    for (i <- (x.size-1) to 1 by -1) {
-      path(i-1) = psi(path(i))(i)
-    }
-    (max, path.toList)
+    constructPath(gamma, psi)
   }
 
   def forward(x: Stream[Int]) = {
