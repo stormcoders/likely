@@ -23,9 +23,9 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
     for (i <- 0 until (x.size - 1)) {
       for (k <- 0 until states.size) {
 
-        val (m, index) = (0 until states.size).map { p =>
-          (gamma(p)(i) * transitions(p).prob(k), p)
-        }.max
+        val (m, index) = _max(0, states.size) { p =>
+          gamma(p)(i) * transitions(p).prob(k)
+        }
 
         psi(k)(i+1) = index
         gamma(k)(i+1) = m * emissions(k).prob(xs.head)
@@ -100,6 +100,12 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
     }
 
     (sum, beta)
+  }
+
+  private def _max(start: Int, end: Int)(func: (Int => LogProbability)) = {
+    (start until end).map { p =>
+      (func(p), p)
+    }.max
   }
 }
 
