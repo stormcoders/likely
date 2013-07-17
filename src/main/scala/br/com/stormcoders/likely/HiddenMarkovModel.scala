@@ -47,16 +47,14 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
                          _max(ks, max, i)
       }
 
-      var path = new Array[Int](x.size)
+      def _path(index: Int, path: List[Int]): List[Int] = {
+        if (index == 0) path
+        else _path(index - 1, psi(path.head)(index) :: path)
+      }
 
       val (max, imax) = _max((1 until states.size).toList, gamma(0)(x.size-1), 0)
-      path(x.size-1) = imax
 
-      for (i <- (x.size-1) to 1 by -1) {
-        path(i-1) = psi(path(i))(i)
-      }
-      
-      (max, path.toList)
+      (max, _path(x.size - 1, List(imax)))
     }
 
     var gamma = Array.ofDim[LogProbability](states.size, x.size)
