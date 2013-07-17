@@ -18,24 +18,27 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
       }
     }
 
+    def dynamicProgramming(gamma: Array[Array[LogProbability]], psi: Array[Array[Int]]) = {
+      var xs = x.tail
+      for (i <- 0 until (x.size - 1)) {
+        for (k <- 0 until states.size) {
+
+          val (m, index) = _max(0, states.size) { p =>
+            gamma(p)(i) * transitions(p).prob(k)
+          }
+
+          psi(k)(i+1) = index
+          gamma(k)(i+1) = m * emissions(k).prob(xs.head)
+        }
+        xs = xs.tail
+      }
+    }
+
     var gamma = Array.ofDim[LogProbability](states.size, x.size)
     var psi = Array.ofDim[Int](states.size, x.size)
 
     initialize(gamma)
-
-    var xs = x.tail
-    for (i <- 0 until (x.size - 1)) {
-      for (k <- 0 until states.size) {
-
-        val (m, index) = _max(0, states.size) { p =>
-          gamma(p)(i) * transitions(p).prob(k)
-        }
-
-        psi(k)(i+1) = index
-        gamma(k)(i+1) = m * emissions(k).prob(xs.head)
-      }
-      xs = xs.tail
-    }
+    dynamicProgramming(gamma, psi)
 
     var max = gamma(0)(x.size-1)
     var path = new Array[Int](x.size)
