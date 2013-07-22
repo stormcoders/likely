@@ -12,57 +12,46 @@ class HiddenMarkovModel(emissions: Map[Int, DiscreteDistribution], transitions: 
   }
 
   def viterbi(x: Stream[Int]) = {
-    def initialize(gamma: Array[Array[LogProbability]]) = {
-      for (k <- 0 until states.size) {
-        gamma(k)(0) = initialProbabilities.prob(Stream(k)) * emissions(k).prob(x.head)
-      }
-    }
-
     def _max(start: Int, end: Int)(func: (Int => LogProbability)) = {
       (start until end).map { p =>
         (func(p), p)
       }.max
     }
-
-    def dynamicProgramming(gamma: Array[Array[LogProbability]], psi: Array[Array[Int]]) = {
-      def _dynamicProgramming(range: Range, x: Stream[Int]): Unit = {
-        for (k <- 0 until states.size) {
-          val (m, index) = _max(0, states.size) { p =>
-            gamma(p)(range.head) * transitions(p).prob(k)
-          }
-          psi(k)(range.head + 1) = index
-          gamma(k)(range.head + 1) = m * emissions(k).prob(x.head)
-        }
-        if (range.length > 1) _dynamicProgramming(range.tail, x.tail)
-      }
-      _dynamicProgramming(0 until (x.size - 1), x)
-    }
-
-    def constructPath(gamma: Array[Array[LogProbability]], psi: Array[Array[Int]]) = {
-      def _max(range: List[Int], max: LogProbability, i: Int): (LogProbability, Int) = range match {
-        case List() => (max, i)
-        case k::ks  => if (max < gamma(k)(x.size-1))
-                         _max(ks, gamma(k)(x.size-1), k)
-                       else
-                         _max(ks, max, i)
-      }
-
-      def _path(index: Int, path: List[Int]): List[Int] = {
-        if (index == 0) path
-        else _path(index - 1, psi(path.head)(index) :: path)
-      }
-
-      val (max, imax) = _max((1 until states.size).toList, gamma(0)(x.size-1), 0)
-
-      (max, _path(x.size - 1, List(imax)))
-    }
-
     var gamma = Array.ofDim[LogProbability](states.size, x.size)
     var psi = Array.ofDim[Int](states.size, x.size)
 
-    initialize(gamma)
-    dynamicProgramming(gamma, psi)
-    constructPath(gamma, psi)
+    for (k <- 0 until states.size) {
+      gamma(k)(0) = initialProbabilities.prob(Stream(k)) * emissions(k).prob(x.head)
+    }
+
+    var xs = x.tail
+    for (i <- 0 until (x.size - 1)) {
+      for (k <- 0 until states.size) {
+
+        val (m, index) = _max(0, states.size) { p =>
+          gamma(p)(i) * transitions(p).prob(k)
+        }
+
+        psi(k)(i+1) = index
+        gamma(k)(i+1) = m * emissions(k).prob(xs.head)
+      }
+      xs = xs.tail
+    }
+
+    var max = gamma(0)(x.size-1)
+    var path = new Array[Int](x.size)
+    path(x.size-1) = 0
+    for (k <- 1 until states.size) {
+      if (max < gamma(k)(x.size-1)) {
+        max = gamma(k)(x.size-1)
+        path(x.size-1) = k
+      }
+    }
+
+    for (i <- (x.size-1) to 1 by -1) {
+      path(i-1) = psi(path(i))(i)
+    }
+    (max, path.toList)
   }
 
   def forward(x: Stream[Int]) = {
